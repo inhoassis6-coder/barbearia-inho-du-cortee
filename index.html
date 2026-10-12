@@ -1,434 +1,705 @@
+
+
 <!DOCTYPE html>
+
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Barbearia Inho Dú Corte | Fila On-line</title>
-<style>
-:root {
-  --gold: #d6ad54;
-  --bg: #101010;
-  --card: #1c1c1c;
-  --text: #fff;
-  --muted: #bdbdbd;
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, sans-serif;
-}
-header {
-  text-align: center;
-  padding: 28px 16px;
-  background: #080808;
-  border-bottom: 2px solid var(--gold);
-}
-.logo {
-  font-size: 30px;
-  font-weight: 900;
-  color: var(--gold);
-  letter-spacing: 1px;
-}
-header p { color: var(--muted); margin-bottom: 0; }
-main { max-width: 760px; margin: auto; padding: 18px; }
-.card {
-  background: var(--card);
-  padding: 20px;
-  margin-bottom: 18px;
-  border: 1px solid #333;
-  border-radius: 14px;
-}
-h2 { color: var(--gold); margin-top: 0; }
-label { display: block; margin: 13px 0 7px; }
-input, button {
-  width: 100%;
-  padding: 13px;
-  border-radius: 8px;
-  font-size: 16px;
-}
-input {
-  color: white;
-  background: #101010;
-  border: 1px solid #444;
-}
-button {
-  background: var(--gold);
-  color: #111;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 12px;
-}
-button.secondary {
-  background: #333;
-  color: white;
-}
-button.danger { background: #852d2d; color: white; }
-.service, .entry {
-  padding: 13px;
-  background: #111;
-  border: 1px solid #383838;
-  border-radius: 9px;
-  margin: 9px 0;
-}
-.service {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.service input {
-  width: 20px;
-  height: 20px;
-}
-.service label { flex: 1; margin: 0; }
-.price { color: var(--gold); font-weight: bold; }
-.muted { color: var(--muted); font-size: 14px; }
-.position {
-  color: var(--gold);
-  font-size: 38px;
-  font-weight: 900;
-}
-.badge {
-  display: inline-block;
-  padding: 5px 9px;
-  border-radius: 5px;
-  background: #333;
-  font-size: 12px;
-}
-.row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-.row button { width: auto; }
-.hidden { display: none; }
-footer {
-  text-align: center;
-  padding: 20px;
-  color: var(--muted);
-  font-size: 13px;
-}
-</style>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#101010">
+
+  <meta name="description" content="Entre na fila online da Barbearia Inho Dú Corte. Atendimento por ordem de chegada.">
+
+  <title>Fila para Corte | Inho Dú Corte</title>
+
+  <style>
+
+    :root {
+
+      --preto: #101010;
+
+      --grafite: #1b1b1b;
+
+      --dourado: #d4af37;
+
+      --branco: #ffffff;
+
+      --cinza: #b9b9b9;
+
+    }
+
+    * {
+
+      box-sizing: border-box;
+
+      margin: 0;
+
+      padding: 0;
+
+    }
+
+    body {
+
+      min-height: 100vh;
+
+      background:
+
+        radial-gradient(ellipse at top, #292215 0%, transparent 45%),
+
+        var(--preto);
+
+      color: var(--branco);
+
+      font-family: Arial, Helvetica, sans-serif;
+
+      padding: 24px 16px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+    }
+
+    .container {
+
+      width: 100%;
+
+      max-width: 440px;
+
+      margin: auto;
+
+    }
+
+    header {
+
+      text-align: center;
+
+      margin-bottom: 30px;
+
+    }
+
+    .logo {
+
+      width: 76px;
+
+      height: 76px;
+
+      margin: 0 auto 15px;
+
+      border: 2px solid var(--dourado);
+
+      border-radius: 50%;
+
+      display: grid;
+
+      place-items: center;
+
+      color: var(--dourado);
+
+      font-size: 27px;
+
+      font-weight: 900;
+
+      letter-spacing: -2px;
+
+    }
+
+    .brand {
+
+      color: var(--dourado);
+
+      font-size: 23px;
+
+      font-weight: 900;
+
+      letter-spacing: 1px;
+
+    }
+
+    .subtitle {
+
+      color: var(--cinza);
+
+      font-size: 12px;
+
+      letter-spacing: 4px;
+
+      margin-top: 8px;
+
+    }
+
+    .card {
+
+      background: rgba(27, 27, 27, 0.96);
+
+      border: 1px solid #38332a;
+
+      border-radius: 20px;
+
+      padding: 25px 21px;
+
+      box-shadow: 0 15px 45px #00000055;
+
+    }
+
+    h1 {
+
+      font-size: 28px;
+
+      line-height: 1.2;
+
+      margin-bottom: 12px;
+
+    }
+
+    h1 span {
+
+      color: var(--dourado);
+
+    }
+
+    .intro {
+
+      color: var(--cinza);
+
+      font-size: 14px;
+
+      line-height: 1.6;
+
+      margin-bottom: 25px;
+
+    }
+
+    .status {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 9px;
+
+      padding: 12px;
+
+      border-radius: 10px;
+
+      background: #25251f;
+
+      color: #e8d89c;
+
+      font-size: 12px;
+
+      margin-bottom: 23px;
+
+    }
+
+    .dot {
+
+      width: 8px;
+
+      height: 8px;
+
+      background: var(--dourado);
+
+      border-radius: 50%;
+
+      flex-shrink: 0;
+
+    }
+
+    label {
+
+      display: block;
+
+      font-size: 13px;
+
+      font-weight: 700;
+
+      margin-bottom: 8px;
+
+    }
+
+    .field {
+
+      margin-bottom: 18px;
+
+    }
+
+    input[type="text"],
+
+    input[type="tel"] {
+
+      width: 100%;
+
+      padding: 15px;
+
+      background: #111111;
+
+      color: white;
+
+      border: 1px solid #454545;
+
+      border-radius: 10px;
+
+      outline: none;
+
+      font-size: 16px;
+
+    }
+
+    input:focus {
+
+      border-color: var(--dourado);
+
+      box-shadow: 0 0 0 2px #d4af3725;
+
+    }
+
+    input::placeholder {
+
+      color: #777777;
+
+    }
+
+    .remember {
+
+      display: flex;
+
+      align-items: flex-start;
+
+      gap: 10px;
+
+      color: #dedede;
+
+      font-size: 13px;
+
+      line-height: 1.5;
+
+      margin: 3px 0 22px;
+
+    }
+
+    .remember input {
+
+      accent-color: var(--dourado);
+
+      width: 17px;
+
+      height: 17px;
+
+      flex-shrink: 0;
+
+      margin-top: 1px;
+
+    }
+
+    button {
+
+      width: 100%;
+
+      min-height: 52px;
+
+      padding: 14px;
+
+      background: var(--dourado);
+
+      color: #111111;
+
+      border: 0;
+
+      border-radius: 10px;
+
+      font-size: 14px;
+
+      font-weight: 900;
+
+      cursor: pointer;
+
+    }
+
+    button:active {
+
+      transform: scale(0.99);
+
+    }
+
+    .secondary {
+
+      background: transparent;
+
+      color: var(--dourado);
+
+      border: 1px solid #77632b;
+
+      margin-top: 12px;
+
+    }
+
+    .notice {
+
+      display: none;
+
+      background: #25251f;
+
+      border: 1px solid #77632b;
+
+      border-radius: 10px;
+
+      padding: 13px;
+
+      margin-top: 16px;
+
+      font-size: 13px;
+
+      line-height: 1.5;
+
+      overflow-wrap: anywhere;
+
+    }
+
+    .notice.show {
+
+      display: block;
+
+    }
+
+    footer {
+
+      text-align: center;
+
+      color: #858585;
+
+      font-size: 12px;
+
+      line-height: 1.7;
+
+      margin-top: 22px;
+
+    }
+
+    footer strong {
+
+      color: var(--dourado);
+
+    }
+
+    @media (min-width: 600px) {
+
+      body {
+
+        padding: 40px 20px;
+
+      }
+
+      .card {
+
+        padding: 32px;
+
+      }
+
+    }
+
+  </style>
+
 </head>
+
 <body>
 
-<header>
-  <div class="logo">INHO DÚ CORTE</div>
-  <p>Seu corte na régua começa aqui!</p>
-</header>
+  <main class="container">
 
-<main>
-  <section class="card">
-    <h2>💈 Entre na fila</h2>
-    <p class="muted">Preencha seus dados e escolha os serviços desejados.</p>
+    <header>
 
-    <form id="joinForm">
-      <label for="name">Seu nome completo</label>
-      <input id="name" required maxlength="80"
-        placeholder="Digite seu nome">
+      <div class="logo" aria-label="Inho Dú Corte">IDC</div>
 
-      <label for="phone">WhatsApp com DDD</label>
-      <input id="phone" type="tel" required maxlength="20"
-        placeholder="Ex.: (75) 99999-9999">
+      <div class="brand">INHO DÚ CORTE</div>
 
-      <label>Escolha os serviços</label>
-      <div id="services"></div>
+      <div class="subtitle">FILA PARA CORTE</div>
 
-      <p>Valor total: <strong id="total" class="price">R$ 0,00</strong></p>
+    </header>
 
-      <label class="muted">
-        <input id="terms" type="checkbox" required
-          style="width:auto">
-        Confirmo meus dados e quero entrar na fila.
-      </label>
+    <section class="card">
 
-      <button type="submit">GARANTIR MINHA VAGA</button>
-    </form>
-    <p id="message" role="status"></p>
-  </section>
+      <h1>Seu próximo corte começa <span>aqui.</span></h1>
 
-  <section class="card">
-    <h2>📋 Minha posição</h2>
-    <div id="myStatus">
-      <p class="muted">Quando você entrar na fila neste aparelho,
-      sua posição aparecerá aqui.</p>
-    </div>
-  </section>
+      <p class="intro">
 
-  <section class="card">
-    <h2>👥 Fila atual deste aparelho</h2>
-    <div id="queue"></div>
-  </section>
+        Entre na fila online sem precisar sair de casa.
 
-  <section class="card">
-    <h2>🔐 Área do barbeiro</h2>
-    <p class="muted">Painel local para gerenciar os atendimentos.</p>
+        Atendimento organizado por ordem de chegada.
 
-    <div id="login">
-      <label for="pin">Senha do painel</label>
-      <input id="pin" type="password" placeholder="Senha">
-      <button id="loginButton" type="button">Entrar no painel</button>
-      <p class="muted">Senha inicial: 1234. Troque-a no código antes de usar.</p>
-    </div>
+      </p>
 
-    <div id="admin" class="hidden">
-      <div class="row">
-        <strong>Gerenciar fila</strong>
-        <button type="button" class="secondary" id="logout">Sair</button>
+      <div class="status">
+
+        <span class="dot"></span>
+
+        <span>Preencha seus dados para continuar.</span>
+
       </div>
-      <button type="button" id="next">Chamar próximo cliente</button>
-      <button type="button" class="secondary" id="finish">
-        Concluir atendimento atual
-      </button>
-      <button type="button" class="danger" id="clear">
-        Limpar fila deste aparelho
-      </button>
-      <p class="muted">As ações afetam apenas os dados salvos neste navegador.</p>
-    </div>
-    <p id="adminMessage" role="status"></p>
-  </section>
-</main>
 
-<footer>
-  Barbearia Inho Dú Corte • Atendimento na régua ✂️
-</footer>
+      <form id="clienteForm">
 
-<script>
-(() => {
-  // Altere esta senha antes de usar.
-  const ADMIN_PIN = "1234";
+        <div class="field">
 
-  const SERVICES = [
-    { id: "corte", name: "Corte masculino", price: 25 },
-    { id: "barba", name: "Barba", price: 15 },
-    { id: "sobrancelha", name: "Sobrancelha", price: 5 }
-  ];
+          <label for="nome">Seu nome completo</label>
 
-  const STORAGE_KEY = "inho_du_corte_fila_v1";
-  const ACTIVE = ["waiting", "in_progress"];
-  let adminOpen = false;
-  let currentTicket = null;
+          <input
 
-  const $ = id => document.getElementById(id);
-  const money = value => value.toLocaleString("pt-BR", {
-    style: "currency", currency: "BRL"
-  });
+            id="nome"
 
-  function load() {
-    try {
-      const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      if (data && Array.isArray(data.entries)) return data;
-    } catch (e) {}
-    return { entries: [] };
-  }
+            name="nome"
 
-  let state = load();
+            type="text"
 
-  function save() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      return true;
-    } catch (e) {
-      alert("Não foi possível salvar. Verifique o espaço disponível.");
-      return false;
-    }
-  }
+            placeholder="Digite seu nome"
 
-  function activeEntries() {
-    return state.entries.filter(entry => ACTIVE.includes(entry.status));
-  }
+            autocomplete="name"
 
-  function renderServices() {
-    $("services").innerHTML = SERVICES.map(service => `
-      <div class="service">
-        <input type="checkbox" id="svc-${service.id}"
-          value="${service.id}" class="serviceCheck">
-        <label for="svc-${service.id}">${service.name}</label>
-        <span class="price">${money(service.price)}</span>
-      </div>
-    `).join("");
+            maxlength="80"
 
-    document.querySelectorAll(".serviceCheck").forEach(input => {
-      input.addEventListener("change", updateTotal);
-    });
-  }
+            required
 
-  function selectedServices() {
-    const ids = [...document.querySelectorAll(".serviceCheck:checked")]
-      .map(input => input.value);
-    return SERVICES.filter(service => ids.includes(service.id));
-  }
+          >
 
-  function updateTotal() {
-    $("total").textContent = money(
-      selectedServices().reduce((sum, service) => sum + service.price, 0)
-    );
-  }
-
-  function positionOf(entry) {
-    if (!ACTIVE.includes(entry.status)) return 0;
-    return activeEntries().findIndex(item => item.id === entry.id) + 1;
-  }
-
-  function render() {
-    const entries = activeEntries();
-
-    $("queue").innerHTML = entries.length ? entries.map((entry, index) => `
-      <div class="entry">
-        <div class="row">
-          <strong>${index + 1}. ${escapeHTML(entry.name)}</strong>
-          <span class="badge">${entry.status === "in_progress"
-            ? "EM ATENDIMENTO" : "AGUARDANDO"}</span>
         </div>
-        <p class="muted">${escapeHTML(entry.phone)}</p>
-        <p class="muted">${entry.services.map(escapeHTML).join(", ")}</p>
-        <p class="price">${money(entry.total)}</p>
-        ${adminOpen ? `
-          <button class="danger" data-cancel="${entry.id}">
-            Cancelar entrada
-          </button>` : ""}
-      </div>
-    `).join("") : '<p class="muted">Ainda não há clientes na fila deste aparelho.</p>';
 
-    $("myStatus").innerHTML = currentTicket
-      ? statusHTML(currentTicket)
-      : '<p class="muted">Entre na fila neste aparelho para acompanhar sua posição.</p>';
+        <div class="field">
 
-    if (adminOpen) {
-      document.querySelectorAll("[data-cancel]").forEach(button => {
-        button.addEventListener("click", () => cancelEntry(button.dataset.cancel));
-      });
+          <label for="telefone">Seu telefone com DDD</label>
+
+          <input
+
+            id="telefone"
+
+            name="telefone"
+
+            type="tel"
+
+            placeholder="(75) 99999-9999"
+
+            autocomplete="tel"
+
+            inputmode="tel"
+
+            maxlength="16"
+
+            required
+
+          >
+
+        </div>
+
+        <label class="remember">
+
+          <input type="checkbox" id="lembrar">
+
+          <span>Lembrar meus dados neste dispositivo para facilitar o próximo acesso.</span>
+
+        </label>
+
+        <button type="submit">CONTINUAR PARA A FILA</button>
+
+        <button type="button" class="secondary" id="apagarDados">
+
+          APAGAR DADOS SALVOS
+
+        </button>
+
+        <div class="notice" id="mensagem" role="status" aria-live="polite"></div>
+
+      </form>
+
+    </section>
+
+    <footer>
+
+      <strong>BARBEARIA INHO DÚ CORTE</strong><br>
+
+      Atendimento por ordem de chegada.<br>
+
+      Esta é a primeira etapa do sistema.
+
+    </footer>
+
+  </main>
+
+  <script>
+
+    const form = document.getElementById("clienteForm");
+
+    const nome = document.getElementById("nome");
+
+    const telefone = document.getElementById("telefone");
+
+    const lembrar = document.getElementById("lembrar");
+
+    const mensagem = document.getElementById("mensagem");
+
+    function mostrarMensagem(texto) {
+
+      mensagem.textContent = texto;
+
+      mensagem.classList.add("show");
+
     }
-  }
 
-  function statusHTML(entry) {
-    const pos = positionOf(entry);
-    let text = entry.status === "waiting" ? "Aguardando sua vez"
-      : entry.status === "in_progress" ? "Chegou sua vez!"
-      : entry.status === "completed" ? "Atendimento concluído"
-      : "Entrada cancelada";
+    function formatarTelefone(valor) {
 
-    return `
-      <p>${escapeHTML(entry.name)}, ${text}.</p>
-      ${pos ? `<div class="position">${pos}º</div>
-      <p class="muted">Sua posição na fila deste aparelho</p>` : ""}
-      <p>Serviços: ${entry.services.map(escapeHTML).join(", ")}</p>
-      <p>Total: <strong class="price">${money(entry.total)}</strong></p>
-      <span class="badge">${text.toUpperCase()}</span>
-    `;
-  }
+      const numeros = valor.replace(/\D/g, "").slice(0, 11);
 
-  function escapeHTML(value) {
-    return String(value).replace(/[&<>"']/g, char => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;",
-      '"': "&quot;", "'": "&#39;"
-    })[char]);
-  }
+      if (numeros.length <= 2) {
 
-  $("joinForm").addEventListener("submit", event => {
-    event.preventDefault();
+        return numeros.length ? "(" + numeros : "";
 
-    const name = $("name").value.trim();
-    const phone = $("phone").value.trim();
-    const services = selectedServices();
+      }
 
-    if (!name || !phone || !services.length) {
-      $("message").textContent = "Preencha seus dados e escolha pelo menos um serviço.";
-      return;
+      if (numeros.length <= 7) {
+
+        return "(" + numeros.slice(0, 2) + ") " + numeros.slice(2);
+
+      }
+
+      if (numeros.length <= 10) {
+
+        return "(" + numeros.slice(0, 2) + ") " +
+
+          numeros.slice(2, 6) + "-" + numeros.slice(6);
+
+      }
+
+      return "(" + numeros.slice(0, 2) + ") " +
+
+        numeros.slice(2, 7) + "-" + numeros.slice(7);
+
     }
 
-    const entry = {
-      id: (crypto.randomUUID ? crypto.randomUUID() :
-        String(Date.now()) + Math.random()),
-      name,
-      phone,
-      services: services.map(service => service.name),
-      total: services.reduce((sum, service) => sum + service.price, 0),
-      status: "waiting",
-      createdAt: new Date().toISOString()
-    };
+    telefone.addEventListener("input", () => {
 
-    state.entries.push(entry);
-    if (!save()) {
-      state.entries = state.entries.filter(item => item.id !== entry.id);
-      return;
+      telefone.value = formatarTelefone(telefone.value);
+
+    });
+
+    // Recupera dados somente se o cliente escolheu lembrá-los.
+
+    try {
+
+      const dados = localStorage.getItem("inhoCorteCliente");
+
+      if (dados) {
+
+        const cliente = JSON.parse(dados);
+
+        nome.value = cliente.nome || "";
+
+        telefone.value = cliente.telefone || "";
+
+        lembrar.checked = true;
+
+      }
+
+    } catch (erro) {
+
+      console.warn("Não foi possível recuperar os dados salvos.");
+
     }
 
-    currentTicket = entry;
-    $("message").textContent = "Você entrou na fila deste aparelho!";
-    $("joinForm").reset();
-    updateTotal();
-    render();
-  });
+    form.addEventListener("submit", (evento) => {
 
-  $("loginButton").addEventListener("click", () => {
-    if ($("pin").value !== ADMIN_PIN) {
-      $("adminMessage").textContent = "Senha incorreta.";
-      return;
-    }
-    adminOpen = true;
-    $("login").classList.add("hidden");
-    $("admin").classList.remove("hidden");
-    $("adminMessage").textContent = "Painel aberto neste aparelho.";
-    render();
-  });
+      evento.preventDefault();
 
-  $("logout").addEventListener("click", () => {
-    adminOpen = false;
-    $("login").classList.remove("hidden");
-    $("admin").classList.add("hidden");
-    $("pin").value = "";
-    render();
-  });
+      const nomeCliente = nome.value.trim();
 
-  $("next").addEventListener("click", () => {
-    const next = activeEntries().find(entry => entry.status === "waiting");
-    if (!next) {
-      $("adminMessage").textContent = "Não há clientes aguardando.";
-      return;
-    }
-    next.status = "in_progress";
-    save();
-    $("adminMessage").textContent = "Próximo cliente chamado no painel.";
-    render();
-  });
+      const telefoneNumeros = telefone.value.replace(/\D/g, "");
 
-  $("finish").addEventListener("click", () => {
-    const current = state.entries.find(entry => entry.status === "in_progress");
-    if (!current) {
-      $("adminMessage").textContent = "Não há atendimento em andamento.";
-      return;
-    }
-    current.status = "completed";
-    save();
-    $("adminMessage").textContent = "Atendimento concluído.";
-    render();
-  });
+      if (nomeCliente.length < 2) {
 
-  function cancelEntry(id) {
-    const entry = state.entries.find(item => item.id === id);
-    if (!entry) return;
-    entry.status = "cancelled";
-    save();
-    render();
-  }
+        mostrarMensagem("Digite seu nome corretamente.");
 
-  $("clear").addEventListener("click", () => {
-    if (!confirm("Tem certeza que deseja apagar todas as entradas deste aparelho?")) return;
-    state.entries = [];
-    currentTicket = null;
-    save();
-    render();
-    $("adminMessage").textContent = "Fila local limpa.";
-  });
+        nome.focus();
 
-  renderServices();
-  updateTotal();
-  render();
-})();
-</script>
+        return;
+
+      }
+
+      if (telefoneNumeros.length < 10 ||
+
+          telefoneNumeros.length > 11) {
+
+        mostrarMensagem("Confira seu telefone com DDD.");
+
+        telefone.focus();
+
+        return;
+
+      }
+
+      if (lembrar.checked) {
+
+        try {
+
+          localStorage.setItem("inhoCorteCliente", JSON.stringify({
+
+            nome: nomeCliente,
+
+            telefone: telefone.value
+
+          }));
+
+        } catch (erro) {
+
+          mostrarMensagem(
+
+            "Não foi possível salvar seus dados neste dispositivo."
+
+          );
+
+          return;
+
+        }
+
+      } else {
+
+        localStorage.removeItem("inhoCorteCliente");
+
+      }
+
+      mostrarMensagem(
+
+        "Dados conferidos! A tela de entrada e confirmação na fila será conectada na próxima etapa. Você ainda não entrou na fila."
+
+      );
+
+    });
+
+    document.getElementById("apagarDados").addEventListener("click", () => {
+
+      try {
+
+        localStorage.removeItem("inhoCorteCliente");
+
+      } catch (erro) {
+
+        // Continua permitindo limpar os campos.
+
+      }
+
+      nome.value = "";
+
+      telefone.value = "";
+
+      lembrar.checked = false;
+
+      mostrarMensagem("Os dados lembrados neste dispositivo foram apagados.");
+
+    });
+
+  </script>
+
 </body>
+
 </html>
