@@ -2,351 +2,433 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090909">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Barbearia Inho Dú Corte | Fila On-line</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--bg:#090909;--card:#151515;--gold:#d9b568;--text:#f8f5ed;--muted:#aaa}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-a{color:inherit;text-decoration:none}
-header{padding:18px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #292929;position:sticky;top:0;background:#090909f5;z-index:5}
-.logo{font-weight:900;letter-spacing:1px}.logo span,h1 span,h2 span{color:var(--gold)}
-header a:last-child{border:1px solid var(--gold);padding:10px 13px;border-radius:7px;color:var(--gold);font-size:13px}
-.hero{padding:80px 6%;text-align:center;background:radial-gradient(ellipse,#392a15,#090909 70%)}
-.tag{color:var(--gold);font-size:11px;letter-spacing:3px;font-weight:bold}
-h1{font-size:clamp(42px,8vw,76px);line-height:1.03;margin:22px 0}
-.hero p,.intro{color:#c4c0b7;line-height:1.7;max-width:570px;margin:0 auto 25px}
-.btn{border:0;background:var(--gold);color:#15110a;font-weight:bold;padding:14px 18px;border-radius:7px;cursor:pointer;display:inline-block}
-main section.content{max-width:1050px;margin:auto;padding:58px 20px}
-.heading{text-align:center;margin-bottom:30px}
-.heading p{color:var(--muted);line-height:1.6}
-h2{font-size:clamp(28px,5vw,40px);margin:10px 0}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.card,.panel{background:var(--card);border:1px solid #302b21;border-radius:12px;padding:22px}
-.card h3{margin:12px 0 8px}.card p{color:var(--muted);font-size:13px;line-height:1.5;min-height:38px}
-.price{font-size:22px;color:var(--gold);font-weight:bold}
-.booking{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:start}
-label{display:block;font-size:13px;margin:16px 0 7px}
-input[type=text],input[type=tel],input[type=search]{width:100%;padding:13px;background:#090909;color:white;border:1px solid #39352d;border-radius:7px;outline:none}
-input:focus{border-color:var(--gold)}
-.service-option{display:flex;align-items:center;gap:10px;padding:13px;border:1px solid #39352d;border-radius:8px;margin:8px 0;cursor:pointer}
-.service-option:has(input:checked){border-color:var(--gold);background:#241d11}
-.service-option input{accent-color:var(--gold)}
-.service-option .sname{flex:1;font-size:13px}
-.service-option small{display:block;color:var(--muted);margin-top:4px}
-.service-option b{color:var(--gold);font-size:12px;white-space:nowrap}
-.total{display:flex;justify-content:space-between;align-items:center;border-block:1px solid #39352d;padding:18px 0;margin:20px 0}
-.total strong{font-size:24px;color:var(--gold)}
-.consent{display:flex;gap:9px;align-items:flex-start;font-size:11px;line-height:1.6;color:#c5c0b6}
-.consent input{margin-top:3px;accent-color:var(--gold)}
-.full{width:100%;margin-top:18px}
-.small{font-size:11px;color:var(--muted);line-height:1.6}
-.chat{background:#222018;border:1px solid #393020;border-radius:9px;padding:15px;font-size:13px;line-height:1.7;margin:18px 0}
-.chat-buttons{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
-.chat-buttons button{background:#211b10;color:var(--gold);border:1px solid #5c4827;border-radius:20px;padding:9px 12px;cursor:pointer;font-size:12px}
-.message{font-size:13px;line-height:1.6;margin-top:13px;overflow-wrap:anywhere}
-.error{color:#ffaaaa}.success{color:#7ee2a5}
-.position{font-size:70px;color:var(--gold);font-weight:900;margin:20px 0 5px}
-.status{display:inline-block;background:#302718;color:var(--gold);padding:8px 12px;border-radius:30px;font-size:12px}
-.line{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #333;padding:13px 0;font-size:12px}
-.line span{color:var(--muted)}.line strong{text-align:right}
-footer{text-align:center;border-top:1px solid #292929;padding:30px 15px;color:#999;font-size:12px}
-@media(max-width:700px){.grid{grid-template-columns:1fr}.booking{grid-template-columns:1fr}.hero{padding:65px 20px}main section.content{padding:45px 16px}header{padding:15px}.card p{min-height:0}}
+:root {
+  --gold: #d6ad54;
+  --bg: #101010;
+  --card: #1c1c1c;
+  --text: #fff;
+  --muted: #bdbdbd;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
+header {
+  text-align: center;
+  padding: 28px 16px;
+  background: #080808;
+  border-bottom: 2px solid var(--gold);
+}
+.logo {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+header p { color: var(--muted); margin-bottom: 0; }
+main { max-width: 760px; margin: auto; padding: 18px; }
+.card {
+  background: var(--card);
+  padding: 20px;
+  margin-bottom: 18px;
+  border: 1px solid #333;
+  border-radius: 14px;
+}
+h2 { color: var(--gold); margin-top: 0; }
+label { display: block; margin: 13px 0 7px; }
+input, button {
+  width: 100%;
+  padding: 13px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+input {
+  color: white;
+  background: #101010;
+  border: 1px solid #444;
+}
+button {
+  background: var(--gold);
+  color: #111;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 12px;
+}
+button.secondary {
+  background: #333;
+  color: white;
+}
+button.danger { background: #852d2d; color: white; }
+.service, .entry {
+  padding: 13px;
+  background: #111;
+  border: 1px solid #383838;
+  border-radius: 9px;
+  margin: 9px 0;
+}
+.service {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.service input {
+  width: 20px;
+  height: 20px;
+}
+.service label { flex: 1; margin: 0; }
+.price { color: var(--gold); font-weight: bold; }
+.muted { color: var(--muted); font-size: 14px; }
+.position {
+  color: var(--gold);
+  font-size: 38px;
+  font-weight: 900;
+}
+.badge {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 5px;
+  background: #333;
+  font-size: 12px;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.row button { width: auto; }
+.hidden { display: none; }
+footer {
+  text-align: center;
+  padding: 20px;
+  color: var(--muted);
+  font-size: 13px;
+}
 </style>
 </head>
 <body>
+
 <header>
-  <a class="logo" href="#inicio">✂ INHO DÚ <span>CORTE</span></a>
-  <a href="#fila">Entrar na fila</a>
+  <div class="logo">INHO DÚ CORTE</div>
+  <p>Seu corte na régua começa aqui!</p>
 </header>
 
 <main>
-<section class="hero" id="inicio">
-  <div class="tag">ESTILO • RESPEITO • QUALIDADE</div>
-  <h1>SEU CORTE.<br><span>SEU ESTILO.</span></h1>
-  <p>Bem-vindo à Barbearia Inho Dú Corte! Escolha seus serviços, informe seus dados e acompanhe sua entrada na fila on-line.</p>
-  <a class="btn" href="#fila">GARANTIR MINHA VAGA ↗</a>
-</section>
+  <section class="card">
+    <h2>💈 Entre na fila</h2>
+    <p class="muted">Preencha seus dados e escolha os serviços desejados.</p>
 
-<section class="content" id="servicos">
-  <div class="heading"><div class="tag">ESCOLHA SEU ESTILO</div><h2>NOSSOS <span>SERVIÇOS</span></h2><p>Confira os serviços e selecione o que deseja fazer.</p></div>
-  <div class="grid" id="serviceCards"><div class="card">Carregando serviços...</div></div>
-</section>
+    <form id="joinForm">
+      <label for="name">Seu nome completo</label>
+      <input id="name" required maxlength="80"
+        placeholder="Digite seu nome">
 
-<section class="content" id="fila">
-  <div class="heading"><div class="tag">ATENDIMENTO ON-LINE</div><h2>GARANTA SUA <span>VAGA</span></h2><p>A fila on-line não é hora marcada. Ela organiza a ordem dos atendimentos.</p></div>
+      <label for="phone">WhatsApp com DDD</label>
+      <input id="phone" type="tel" required maxlength="20"
+        placeholder="Ex.: (75) 99999-9999">
 
-  <div class="booking">
-    <div class="panel">
-      <h3>🤖 Robô atendente</h3>
-      <div class="chat" id="botMessage" aria-live="polite">Salve, família! 💈 Vou te ajudar a entrar na fila. Primeiro, preencha seu nome e WhatsApp e escolha seus serviços.</div>
+      <label>Escolha os serviços</label>
+      <div id="services"></div>
 
-      <form id="queueForm">
-        <label for="customerName">Nome completo *</label>
-        <input id="customerName" type="text" minlength="2" maxlength="80" autocomplete="name" required placeholder="Digite seu nome">
+      <p>Valor total: <strong id="total" class="price">R$ 0,00</strong></p>
 
-        <label for="customerPhone">WhatsApp com DDD *</label>
-        <input id="customerPhone" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" required placeholder="(75) 99999-9999">
+      <label class="muted">
+        <input id="terms" type="checkbox" required
+          style="width:auto">
+        Confirmo meus dados e quero entrar na fila.
+      </label>
 
-        <label>Quais serviços você vai fazer? *</label>
-        <div id="serviceChoices">Carregando serviços...</div>
-
-        <div class="total"><span>Total estimado</span><strong id="totalPrice">R$ 0,00</strong></div>
-
-        <label class="consent"><input id="consent" type="checkbox" required><span>Autorizo o uso do meu nome e telefone para organizar meu atendimento e consultar o status da fila.</span></label>
-
-        <button class="btn full" id="submitButton" type="submit">CONFIRMAR E ENTRAR NA FILA ↗</button>
-        <div class="message" id="formMessage" role="status"></div>
-        <p class="small">Seus dados pessoais não aparecem na lista pública. Guarde este navegador para acompanhar sua posição.</p>
-      </form>
-    </div>
-
-    <aside class="panel">
-      <div class="tag">ACOMPANHAMENTO</div>
-      <h3>Sua posição na fila</h3>
-      <div id="emptyStatus"><p class="small">Depois de confirmar a entrada, sua posição e o status aparecerão aqui.</p></div>
-      <div id="ticketStatus" hidden>
-        <div class="position" id="position">—</div>
-        <div class="status" id="status">Aguardando</div>
-        <div class="line"><span>Nome</span><strong id="ticketName">—</strong></div>
-        <div class="line"><span>Serviços</span><strong id="ticketServices">—</strong></div>
-        <div class="line"><span>Total</span><strong id="ticketTotal">—</strong></div>
-        <p class="small">A posição pode mudar conforme os atendimentos. Acompanhe esta página para conferir atualizações.</p>
-        <button class="btn full" id="clearTicket" type="button">Limpar acompanhamento</button>
-      </div>
-    </aside>
-  </div>
-</section>
-
-<section class="content">
-  <div class="heading"><div class="tag">PRECISA DE AJUDA?</div><h2>FALA COM NOSSO <span>ROBÔ</span></h2><p>Escolha uma pergunta para receber orientação.</p></div>
-  <div class="panel">
-    <div class="chat" id="assistantReply" aria-live="polite">Salve! Escolha uma pergunta abaixo que eu te explico.</div>
-    <div class="chat-buttons">
-      <button type="button" data-q="fila">Como funciona a fila?</button>
-      <button type="button" data-q="hora">É hora marcada?</button>
-      <button type="button" data-q="preco">Como vejo os preços?</button>
-    </div>
-    <form id="assistantForm">
-      <label for="question">Ou digite sua pergunta</label>
-      <input id="question" type="text" maxlength="500" placeholder="Escreva aqui...">
-      <button class="btn full" type="submit">PERGUNTAR AO ROBÔ</button>
+      <button type="submit">GARANTIR MINHA VAGA</button>
     </form>
-  </div>
-</section>
+    <p id="message" role="status"></p>
+  </section>
+
+  <section class="card">
+    <h2>📋 Minha posição</h2>
+    <div id="myStatus">
+      <p class="muted">Quando você entrar na fila neste aparelho,
+      sua posição aparecerá aqui.</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>👥 Fila atual deste aparelho</h2>
+    <div id="queue"></div>
+  </section>
+
+  <section class="card">
+    <h2>🔐 Área do barbeiro</h2>
+    <p class="muted">Painel local para gerenciar os atendimentos.</p>
+
+    <div id="login">
+      <label for="pin">Senha do painel</label>
+      <input id="pin" type="password" placeholder="Senha">
+      <button id="loginButton" type="button">Entrar no painel</button>
+      <p class="muted">Senha inicial: 1234. Troque-a no código antes de usar.</p>
+    </div>
+
+    <div id="admin" class="hidden">
+      <div class="row">
+        <strong>Gerenciar fila</strong>
+        <button type="button" class="secondary" id="logout">Sair</button>
+      </div>
+      <button type="button" id="next">Chamar próximo cliente</button>
+      <button type="button" class="secondary" id="finish">
+        Concluir atendimento atual
+      </button>
+      <button type="button" class="danger" id="clear">
+        Limpar fila deste aparelho
+      </button>
+      <p class="muted">As ações afetam apenas os dados salvos neste navegador.</p>
+    </div>
+    <p id="adminMessage" role="status"></p>
+  </section>
 </main>
 
-<footer>✂ BARBEARIA INHO DÚ CORTE<br><br>Seu estilo começa aqui. © <span id="year"></span></footer>
+<footer>
+  Barbearia Inho Dú Corte • Atendimento na régua ✂️
+</footer>
 
 <script>
-/* CONFIGURE A URL E A CHAVE PUBLICA DO SUPABASE AQUI */
-const SUPABASE_URL = "COLE_A_URL_DO_SEU_PROJETO";
-const SUPABASE_ANON_KEY = "COLE_A_CHAVE_PUBLICA_ANON";
+(() => {
+  // Altere esta senha antes de usar.
+  const ADMIN_PIN = "1234";
 
-const $ = id => document.getElementById(id);
-const money = n => Number(n || 0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
-const configured = window.supabase &&
-  SUPABASE_URL.startsWith("https://") &&
-  !SUPABASE_URL.includes("COLE_") &&
-  SUPABASE_ANON_KEY.length > 20 &&
-  !SUPABASE_ANON_KEY.includes("COLE_");
+  const SERVICES = [
+    { id: "corte", name: "Corte masculino", price: 25 },
+    { id: "barba", name: "Barba", price: 15 },
+    { id: "sobrancelha", name: "Sobrancelha", price: 5 }
+  ];
 
-const db = configured
-  ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY)
-  : null;
+  const STORAGE_KEY = "inho_du_corte_fila_v1";
+  const ACTIVE = ["waiting", "in_progress"];
+  let adminOpen = false;
+  let currentTicket = null;
 
-let services = [];
-let poller = null;
-let token = null;
-const TOKEN_KEY = "inho_du_corte_ticket_token";
-
-function bot(text){ $("botMessage").textContent = text; }
-function message(text,type=""){ $("formMessage").textContent=text; $("formMessage").className="message "+type; }
-function phoneDigits(value){ return value.replace(/\D/g,""); }
-
-function selectedServices(){
-  const ids = [...document.querySelectorAll(".service-check:checked")].map(x=>x.value);
-  return services.filter(s=>ids.includes(s.id));
-}
-function updateTotal(){
-  const chosen=selectedServices();
-  $("totalPrice").textContent=money(chosen.reduce((sum,s)=>sum+Number(s.price),0));
-  return chosen;
-}
-function renderServices(){
-  $("serviceCards").replaceChildren();
-  $("serviceChoices").replaceChildren();
-
-  if(!services.length){
-    $("serviceCards").textContent="Nenhum serviço cadastrado. O responsável precisa cadastrar serviços no Supabase.";
-    $("serviceChoices").textContent="Serviços indisponíveis no momento.";
-    return;
-  }
-
-  services.forEach((s,i)=>{
-    const card=document.createElement("article");
-    card.className="card";
-    const icon=document.createElement("div");
-    icon.style.color="var(--gold)";
-    icon.style.fontSize="25px";
-    icon.textContent=["✂","◈","✦","◆"][i%4];
-    const h=document.createElement("h3"); h.textContent=s.name;
-    const p=document.createElement("p"); p.textContent=s.description||"Serviço da barbearia.";
-    const price=document.createElement("div"); price.className="price"; price.textContent=money(s.price);
-    card.append(icon,h,p,price); $("serviceCards").append(card);
-
-    const label=document.createElement("label"); label.className="service-option";
-    const check=document.createElement("input"); check.type="checkbox"; check.className="service-check"; check.value=s.id;
-    check.addEventListener("change",()=>{
-      const chosen=updateTotal();
-      if(chosen.length) bot("Boa! Você escolheu "+chosen.map(x=>x.name).join(", ")+". Total estimado: "+money(chosen.reduce((sum,x)=>sum+Number(x.price),0))+". Agora confira seus dados e confirme.");
-    });
-    const name=document.createElement("span"); name.className="sname";
-    const strong=document.createElement("strong"); strong.textContent=s.name;
-    const desc=document.createElement("small"); desc.textContent=s.description||"";
-    name.append(strong,desc);
-    const priceText=document.createElement("b"); priceText.textContent=money(s.price);
-    label.append(check,name,priceText); $("serviceChoices").append(label);
+  const $ = id => document.getElementById(id);
+  const money = value => value.toLocaleString("pt-BR", {
+    style: "currency", currency: "BRL"
   });
-}
-async function loadServices(){
-  if(!db){
-    services=[
-      {id:"demo-corte",name:"Corte masculino",description:"Do clássico ao degradê.",price:25},
-      {id:"demo-barba",name:"Barba",description:"Acabamento alinhado.",price:15},
-      {id:"demo-sobrancelha",name:"Sobrancelha",description:"Detalhe que completa o visual.",price:5}
-    ];
-    renderServices();
-    bot("Salve, família! Estou em modo de demonstração. Para registrar uma vaga real, configure o Supabase no código e execute o SQL.");
-    return;
-  }
-  const {data,error}=await db.from("services").select("id,name,description,price").eq("active",true).order("sort_order");
-  if(error){
-    console.error(error);
-    $("serviceCards").textContent="Não foi possível carregar os serviços. Confira a configuração do Supabase.";
-    $("serviceChoices").textContent="Serviços indisponíveis.";
-    return;
-  }
-  services=data||[];
-  renderServices();
-}
-function renderTicket(t){
-  $("emptyStatus").hidden=true;
-  $("ticketStatus").hidden=false;
-  $("position").textContent=t.position==null?"—":"#"+t.position;
-  $("status").textContent=({waiting:"Aguardando",in_service:"Em atendimento",completed:"Concluído",cancelled:"Cancelado"})[t.status]||t.status;
-  $("ticketName").textContent=t.customer_name||"Cliente";
-  $("ticketServices").textContent=Array.isArray(t.services)?t.services.join(", "):"—";
-  $("ticketTotal").textContent=money(t.total_price);
-}
-async function refreshStatus(){
-  if(!db||!token)return;
-  const {data,error}=await db.rpc("get_queue_status",{p_ticket_token:token});
-  if(error){console.error(error);return;}
-  const t=Array.isArray(data)?data[0]:data;
-  if(t)renderTicket(t);
-}
-function startPolling(){
-  if(poller)clearInterval(poller);
-  refreshStatus();
-  poller=setInterval(refreshStatus,15000);
-}
-function validPhone(d){return (d.length===10||d.length===11)&&!/^(\d)\1+$/.test(d);}
 
-$("customerPhone").addEventListener("input",()=>{
-  const d=phoneDigits($("customerPhone").value).slice(0,11);
-  let f=d;
-  if(d.length>2&&d.length<=6)f="("+d.slice(0,2)+") "+d.slice(2);
-  else if(d.length>6&&d.length<=10)f="("+d.slice(0,2)+") "+d.slice(2,6)+"-"+d.slice(6);
-  else if(d.length>10)f="("+d.slice(0,2)+") "+d.slice(2,7)+"-"+d.slice(7);
-  $("customerPhone").value=f;
-});
-
-$("queueForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  const name=$("customerName").value.trim();
-  const phone=phoneDigits($("customerPhone").value);
-  const chosen=updateTotal();
-
-  if(name.length<2){message("Informe seu nome completo.","error");return;}
-  if(!validPhone(phone)){message("Informe um WhatsApp válido com DDD.","error");return;}
-  if(!chosen.length){message("Escolha pelo menos um serviço.","error");bot("Escolhe pelo menos um serviço antes de continuar.");return;}
-  if(!$("consent").checked){message("Autorize o uso dos dados para organizar seu atendimento.","error");return;}
-
-  if(!db){
-    message("Modo demonstração: sua entrada não foi enviada para uma fila real. Configure o Supabase primeiro.","error");
-    bot("Seus dados ainda não foram enviados. O responsável precisa configurar o banco de dados para ativar a fila real.");
-    return;
+  function load() {
+    try {
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (data && Array.isArray(data.entries)) return data;
+    } catch (e) {}
+    return { entries: [] };
   }
 
-  $("submitButton").disabled=true;
-  $("submitButton").textContent="REGISTRANDO...";
-  message("");
-  try{
-    const {data,error}=await db.rpc("join_queue",{
-      p_customer_name:name,
-      p_phone:phone,
-      p_service_ids:chosen.map(s=>s.id)
+  let state = load();
+
+  function save() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      return true;
+    } catch (e) {
+      alert("Não foi possível salvar. Verifique o espaço disponível.");
+      return false;
+    }
+  }
+
+  function activeEntries() {
+    return state.entries.filter(entry => ACTIVE.includes(entry.status));
+  }
+
+  function renderServices() {
+    $("services").innerHTML = SERVICES.map(service => `
+      <div class="service">
+        <input type="checkbox" id="svc-${service.id}"
+          value="${service.id}" class="serviceCheck">
+        <label for="svc-${service.id}">${service.name}</label>
+        <span class="price">${money(service.price)}</span>
+      </div>
+    `).join("");
+
+    document.querySelectorAll(".serviceCheck").forEach(input => {
+      input.addEventListener("change", updateTotal);
     });
-    if(error)throw error;
-    const t=Array.isArray(data)?data[0]:data;
-    if(!t||!t.ticket_token)throw new Error("O banco não retornou o código de acompanhamento.");
-    token=t.ticket_token;
-    localStorage.setItem(TOKEN_KEY,token);
-    renderTicket({
-      customer_name:name,
-      services:chosen.map(s=>s.name),
-      total_price:t.total_price,
-      status:t.status,
-      position:t.position
-    });
-    message("Pronto, "+name+"! Sua entrada foi registrada. Guarde este navegador para acompanhar sua posição.","success");
-    bot("Fechou, "+name+"! Sua entrada foi registrada. Serviços: "+chosen.map(s=>s.name).join(", ")+". Total: "+money(t.total_price)+". Sua posição inicial é #"+t.position+". A fila não é hora marcada.");
-    $("queueForm").reset();
+  }
+
+  function selectedServices() {
+    const ids = [...document.querySelectorAll(".serviceCheck:checked")]
+      .map(input => input.value);
+    return SERVICES.filter(service => ids.includes(service.id));
+  }
+
+  function updateTotal() {
+    $("total").textContent = money(
+      selectedServices().reduce((sum, service) => sum + service.price, 0)
+    );
+  }
+
+  function positionOf(entry) {
+    if (!ACTIVE.includes(entry.status)) return 0;
+    return activeEntries().findIndex(item => item.id === entry.id) + 1;
+  }
+
+  function render() {
+    const entries = activeEntries();
+
+    $("queue").innerHTML = entries.length ? entries.map((entry, index) => `
+      <div class="entry">
+        <div class="row">
+          <strong>${index + 1}. ${escapeHTML(entry.name)}</strong>
+          <span class="badge">${entry.status === "in_progress"
+            ? "EM ATENDIMENTO" : "AGUARDANDO"}</span>
+        </div>
+        <p class="muted">${escapeHTML(entry.phone)}</p>
+        <p class="muted">${entry.services.map(escapeHTML).join(", ")}</p>
+        <p class="price">${money(entry.total)}</p>
+        ${adminOpen ? `
+          <button class="danger" data-cancel="${entry.id}">
+            Cancelar entrada
+          </button>` : ""}
+      </div>
+    `).join("") : '<p class="muted">Ainda não há clientes na fila deste aparelho.</p>';
+
+    $("myStatus").innerHTML = currentTicket
+      ? statusHTML(currentTicket)
+      : '<p class="muted">Entre na fila neste aparelho para acompanhar sua posição.</p>';
+
+    if (adminOpen) {
+      document.querySelectorAll("[data-cancel]").forEach(button => {
+        button.addEventListener("click", () => cancelEntry(button.dataset.cancel));
+      });
+    }
+  }
+
+  function statusHTML(entry) {
+    const pos = positionOf(entry);
+    let text = entry.status === "waiting" ? "Aguardando sua vez"
+      : entry.status === "in_progress" ? "Chegou sua vez!"
+      : entry.status === "completed" ? "Atendimento concluído"
+      : "Entrada cancelada";
+
+    return `
+      <p>${escapeHTML(entry.name)}, ${text}.</p>
+      ${pos ? `<div class="position">${pos}º</div>
+      <p class="muted">Sua posição na fila deste aparelho</p>` : ""}
+      <p>Serviços: ${entry.services.map(escapeHTML).join(", ")}</p>
+      <p>Total: <strong class="price">${money(entry.total)}</strong></p>
+      <span class="badge">${text.toUpperCase()}</span>
+    `;
+  }
+
+  function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, char => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;",
+      '"': "&quot;", "'": "&#39;"
+    })[char]);
+  }
+
+  $("joinForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const name = $("name").value.trim();
+    const phone = $("phone").value.trim();
+    const services = selectedServices();
+
+    if (!name || !phone || !services.length) {
+      $("message").textContent = "Preencha seus dados e escolha pelo menos um serviço.";
+      return;
+    }
+
+    const entry = {
+      id: (crypto.randomUUID ? crypto.randomUUID() :
+        String(Date.now()) + Math.random()),
+      name,
+      phone,
+      services: services.map(service => service.name),
+      total: services.reduce((sum, service) => sum + service.price, 0),
+      status: "waiting",
+      createdAt: new Date().toISOString()
+    };
+
+    state.entries.push(entry);
+    if (!save()) {
+      state.entries = state.entries.filter(item => item.id !== entry.id);
+      return;
+    }
+
+    currentTicket = entry;
+    $("message").textContent = "Você entrou na fila deste aparelho!";
+    $("joinForm").reset();
     updateTotal();
-    startPolling();
-  }catch(err){
-    console.error(err);
-    message(err.message||"Não foi possível entrar na fila. Tente novamente.","error");
-  }finally{
-    $("submitButton").disabled=false;
-    $("submitButton").textContent="CONFIRMAR E ENTRAR NA FILA ↗";
-  }
-});
+    render();
+  });
 
-$("clearTicket").addEventListener("click",()=>{
-  token=null;
-  localStorage.removeItem(TOKEN_KEY);
-  if(poller)clearInterval(poller);
-  $("ticketStatus").hidden=true;
-  $("emptyStatus").hidden=false;
-});
-function ask(question){
-  const q=question.toLowerCase();
-  const answer=q.includes("hora")||q.includes("marcada")
-    ?"Não, família! A fila on-line não é hora marcada. Ela organiza a ordem dos atendimentos. Acompanhe sua posição e aguarde a orientação da barbearia."
-    :q.includes("preço")||q.includes("preco")||q.includes("valor")
-    ?"Os preços aparecem nos cartões de serviços. Selecione um ou mais serviços e o site calcula o total antes de confirmar."
-    :"Para entrar na fila, informe nome e WhatsApp com DDD, escolha os serviços e confirme. Depois, acompanhe sua posição nesta página.";
-  $("assistantReply").textContent=answer;
-}
-document.querySelectorAll("[data-q]").forEach(b=>b.addEventListener("click",()=>ask(b.textContent)));
-$("assistantForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const q=$("question").value.trim();
-  if(!q)return;
-  ask(q);$("question").value="";
-});
-$("year").textContent=new Date().getFullYear();
+  $("loginButton").addEventListener("click", () => {
+    if ($("pin").value !== ADMIN_PIN) {
+      $("adminMessage").textContent = "Senha incorreta.";
+      return;
+    }
+    adminOpen = true;
+    $("login").classList.add("hidden");
+    $("admin").classList.remove("hidden");
+    $("adminMessage").textContent = "Painel aberto neste aparelho.";
+    render();
+  });
 
-loadServices().then(()=>{
-  if(db){
-    token=localStorage.getItem(TOKEN_KEY);
-    if(token)startPolling();
+  $("logout").addEventListener("click", () => {
+    adminOpen = false;
+    $("login").classList.remove("hidden");
+    $("admin").classList.add("hidden");
+    $("pin").value = "";
+    render();
+  });
+
+  $("next").addEventListener("click", () => {
+    const next = activeEntries().find(entry => entry.status === "waiting");
+    if (!next) {
+      $("adminMessage").textContent = "Não há clientes aguardando.";
+      return;
+    }
+    next.status = "in_progress";
+    save();
+    $("adminMessage").textContent = "Próximo cliente chamado no painel.";
+    render();
+  });
+
+  $("finish").addEventListener("click", () => {
+    const current = state.entries.find(entry => entry.status === "in_progress");
+    if (!current) {
+      $("adminMessage").textContent = "Não há atendimento em andamento.";
+      return;
+    }
+    current.status = "completed";
+    save();
+    $("adminMessage").textContent = "Atendimento concluído.";
+    render();
+  });
+
+  function cancelEntry(id) {
+    const entry = state.entries.find(item => item.id === id);
+    if (!entry) return;
+    entry.status = "cancelled";
+    save();
+    render();
   }
-});
+
+  $("clear").addEventListener("click", () => {
+    if (!confirm("Tem certeza que deseja apagar todas as entradas deste aparelho?")) return;
+    state.entries = [];
+    currentTicket = null;
+    save();
+    render();
+    $("adminMessage").textContent = "Fila local limpa.";
+  });
+
+  renderServices();
+  updateTotal();
+  render();
+})();
 </script>
 </body>
 </html>
