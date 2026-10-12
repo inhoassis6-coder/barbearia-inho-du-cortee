@@ -1,705 +1,163 @@
 
-
 <!DOCTYPE html>
-
 <html lang="pt-BR">
-
 <head>
-
   <meta charset="UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101010">
-
-  <meta name="description" content="Entre na fila online da Barbearia Inho Dú Corte. Atendimento por ordem de chegada.">
-
-  <title>Fila para Corte | Inho Dú Corte</title>
-
+  <title>Barbearia Inho Dú Corte</title>
   <style>
-
-    :root {
-
-      --preto: #101010;
-
-      --grafite: #1b1b1b;
-
-      --dourado: #d4af37;
-
-      --branco: #ffffff;
-
-      --cinza: #b9b9b9;
-
-    }
-
-    * {
-
-      box-sizing: border-box;
-
-      margin: 0;
-
-      padding: 0;
-
-    }
+    * { box-sizing: border-box; }
 
     body {
-
-      min-height: 100vh;
-
-      background:
-
-        radial-gradient(ellipse at top, #292215 0%, transparent 45%),
-
-        var(--preto);
-
-      color: var(--branco);
-
-      font-family: Arial, Helvetica, sans-serif;
-
-      padding: 24px 16px;
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-
-    }
-
-    .container {
-
-      width: 100%;
-
-      max-width: 440px;
-
-      margin: auto;
-
+      margin: 0;
+      background: #101010;
+      color: #fff;
+      font-family: Arial, sans-serif;
     }
 
     header {
-
       text-align: center;
-
-      margin-bottom: 30px;
-
+      padding: 35px 18px;
+      background: #080808;
+      border-bottom: 2px solid #d6ad54;
     }
 
     .logo {
-
-      width: 76px;
-
-      height: 76px;
-
-      margin: 0 auto 15px;
-
-      border: 2px solid var(--dourado);
-
-      border-radius: 50%;
-
-      display: grid;
-
-      place-items: center;
-
-      color: var(--dourado);
-
-      font-size: 27px;
-
+      color: #d6ad54;
+      font-size: 28px;
       font-weight: 900;
-
-      letter-spacing: -2px;
-
-    }
-
-    .brand {
-
-      color: var(--dourado);
-
-      font-size: 23px;
-
-      font-weight: 900;
-
       letter-spacing: 1px;
-
     }
 
-    .subtitle {
+    header p { color: #ccc; }
 
-      color: var(--cinza);
-
-      font-size: 12px;
-
-      letter-spacing: 4px;
-
-      margin-top: 8px;
-
+    main {
+      max-width: 650px;
+      margin: auto;
+      padding: 20px;
     }
 
     .card {
-
-      background: rgba(27, 27, 27, 0.96);
-
-      border: 1px solid #38332a;
-
-      border-radius: 20px;
-
-      padding: 25px 21px;
-
-      box-shadow: 0 15px 45px #00000055;
-
-    }
-
-    h1 {
-
-      font-size: 28px;
-
-      line-height: 1.2;
-
-      margin-bottom: 12px;
-
-    }
-
-    h1 span {
-
-      color: var(--dourado);
-
-    }
-
-    .intro {
-
-      color: var(--cinza);
-
-      font-size: 14px;
-
-      line-height: 1.6;
-
-      margin-bottom: 25px;
-
-    }
-
-    .status {
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 9px;
-
-      padding: 12px;
-
-      border-radius: 10px;
-
-      background: #25251f;
-
-      color: #e8d89c;
-
-      font-size: 12px;
-
-      margin-bottom: 23px;
-
-    }
-
-    .dot {
-
-      width: 8px;
-
-      height: 8px;
-
-      background: var(--dourado);
-
-      border-radius: 50%;
-
-      flex-shrink: 0;
-
-    }
-
-    label {
-
-      display: block;
-
-      font-size: 13px;
-
-      font-weight: 700;
-
-      margin-bottom: 8px;
-
-    }
-
-    .field {
-
+      background: #1c1c1c;
+      border: 1px solid #393939;
+      border-radius: 14px;
+      padding: 22px;
       margin-bottom: 18px;
-
     }
 
-    input[type="text"],
+    h2 { color: #d6ad54; }
 
-    input[type="tel"] {
-
-      width: 100%;
-
-      padding: 15px;
-
-      background: #111111;
-
-      color: white;
-
-      border: 1px solid #454545;
-
-      border-radius: 10px;
-
-      outline: none;
-
-      font-size: 16px;
-
-    }
-
-    input:focus {
-
-      border-color: var(--dourado);
-
-      box-shadow: 0 0 0 2px #d4af3725;
-
-    }
-
-    input::placeholder {
-
-      color: #777777;
-
-    }
-
-    .remember {
-
+    .service {
       display: flex;
-
-      align-items: flex-start;
-
-      gap: 10px;
-
-      color: #dedede;
-
-      font-size: 13px;
-
-      line-height: 1.5;
-
-      margin: 3px 0 22px;
-
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid #383838;
     }
 
-    .remember input {
-
-      accent-color: var(--dourado);
-
-      width: 17px;
-
-      height: 17px;
-
-      flex-shrink: 0;
-
-      margin-top: 1px;
-
-    }
+    .price { color: #d6ad54; font-weight: bold; }
 
     button {
-
+      display: block;
       width: 100%;
-
-      min-height: 52px;
-
-      padding: 14px;
-
-      background: var(--dourado);
-
-      color: #111111;
-
-      border: 0;
-
-      border-radius: 10px;
-
-      font-size: 14px;
-
-      font-weight: 900;
-
+      padding: 15px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 9px;
+      background: #d6ad54;
+      color: #111;
+      font-weight: bold;
+      font-size: 16px;
       cursor: pointer;
-
-    }
-
-    button:active {
-
-      transform: scale(0.99);
-
     }
 
     .secondary {
-
-      background: transparent;
-
-      color: var(--dourado);
-
-      border: 1px solid #77632b;
-
-      margin-top: 12px;
-
+      background: #333;
+      color: #fff;
     }
 
-    .notice {
-
-      display: none;
-
-      background: #25251f;
-
-      border: 1px solid #77632b;
-
-      border-radius: 10px;
-
-      padding: 13px;
-
-      margin-top: 16px;
-
-      font-size: 13px;
-
-      line-height: 1.5;
-
-      overflow-wrap: anywhere;
-
-    }
-
-    .notice.show {
-
-      display: block;
-
+    .note {
+      color: #bbb;
+      font-size: 14px;
+      line-height: 1.6;
     }
 
     footer {
-
       text-align: center;
-
-      color: #858585;
-
-      font-size: 12px;
-
-      line-height: 1.7;
-
-      margin-top: 22px;
-
+      color: #aaa;
+      padding: 20px;
+      font-size: 13px;
     }
-
-    footer strong {
-
-      color: var(--dourado);
-
-    }
-
-    @media (min-width: 600px) {
-
-      body {
-
-        padding: 40px 20px;
-
-      }
-
-      .card {
-
-        padding: 32px;
-
-      }
-
-    }
-
   </style>
-
 </head>
-
 <body>
+  <header>
+    <div class="logo">INHO DÚ CORTE</div>
+    <p>Seu estilo, nosso compromisso! 💈</p>
+  </header>
 
-  <main class="container">
-
-    <header>
-
-      <div class="logo" aria-label="Inho Dú Corte">IDC</div>
-
-      <div class="brand">INHO DÚ CORTE</div>
-
-      <div class="subtitle">FILA PARA CORTE</div>
-
-    </header>
-
+  <main>
     <section class="card">
-
-      <h1>Seu próximo corte começa <span>aqui.</span></h1>
-
-      <p class="intro">
-
-        Entre na fila online sem precisar sair de casa.
-
-        Atendimento organizado por ordem de chegada.
-
+      <h2>Bem-vindo, família!</h2>
+      <p>
+        Seja bem-vindo à Barbearia Inho Dú Corte.
+        Aqui seu corte é tratado na régua!
       </p>
-
-      <div class="status">
-
-        <span class="dot"></span>
-
-        <span>Preencha seus dados para continuar.</span>
-
-      </div>
-
-      <form id="clienteForm">
-
-        <div class="field">
-
-          <label for="nome">Seu nome completo</label>
-
-          <input
-
-            id="nome"
-
-            name="nome"
-
-            type="text"
-
-            placeholder="Digite seu nome"
-
-            autocomplete="name"
-
-            maxlength="80"
-
-            required
-
-          >
-
-        </div>
-
-        <div class="field">
-
-          <label for="telefone">Seu telefone com DDD</label>
-
-          <input
-
-            id="telefone"
-
-            name="telefone"
-
-            type="tel"
-
-            placeholder="(75) 99999-9999"
-
-            autocomplete="tel"
-
-            inputmode="tel"
-
-            maxlength="16"
-
-            required
-
-          >
-
-        </div>
-
-        <label class="remember">
-
-          <input type="checkbox" id="lembrar">
-
-          <span>Lembrar meus dados neste dispositivo para facilitar o próximo acesso.</span>
-
-        </label>
-
-        <button type="submit">CONTINUAR PARA A FILA</button>
-
-        <button type="button" class="secondary" id="apagarDados">
-
-          APAGAR DADOS SALVOS
-
-        </button>
-
-        <div class="notice" id="mensagem" role="status" aria-live="polite"></div>
-
-      </form>
-
+      <button onclick="mostrarFila()">Entrar na fila on-line</button>
+      <p class="note">
+        Atenção: a fila on-line não é hora marcada.
+      </p>
     </section>
 
-    <footer>
+    <section class="card">
+      <h2>Nossos serviços</h2>
+      <div class="service">
+        <span>Corte masculino</span>
+        <span class="price">R$ 25,00</span>
+      </div>
+      <div class="service">
+        <span>Barba</span>
+        <span class="price">R$ 15,00</span>
+      </div>
+      <div class="service">
+        <span>Sobrancelha</span>
+        <span class="price">R$ 5,00</span>
+      </div>
+    </section>
 
-      <strong>BARBEARIA INHO DÚ CORTE</strong><br>
-
-      Atendimento por ordem de chegada.<br>
-
-      Esta é a primeira etapa do sistema.
-
-    </footer>
-
+    <section class="card" id="fila" hidden>
+      <h2>Fila on-line</h2>
+      <p>
+        A próxima etapa será o cadastro do cliente e
+        o gerenciamento da fila neste aparelho.
+      </p>
+      <p class="note">
+        Esta versão inicial ainda não registra entradas
+        nem compartilha a fila entre celulares.
+      </p>
+      <button class="secondary" onclick="fecharFila()">
+        Voltar à página inicial
+      </button>
+    </section>
   </main>
 
+  <footer>
+    Barbearia Inho Dú Corte • Feito para a família! ✂️
+  </footer>
+
   <script>
-
-    const form = document.getElementById("clienteForm");
-
-    const nome = document.getElementById("nome");
-
-    const telefone = document.getElementById("telefone");
-
-    const lembrar = document.getElementById("lembrar");
-
-    const mensagem = document.getElementById("mensagem");
-
-    function mostrarMensagem(texto) {
-
-      mensagem.textContent = texto;
-
-      mensagem.classList.add("show");
-
+    function mostrarFila() {
+      document.getElementById("fila").hidden = false;
+      document.getElementById("fila").scrollIntoView({
+        behavior: "smooth"
+      });
     }
 
-    function formatarTelefone(valor) {
-
-      const numeros = valor.replace(/\D/g, "").slice(0, 11);
-
-      if (numeros.length <= 2) {
-
-        return numeros.length ? "(" + numeros : "";
-
-      }
-
-      if (numeros.length <= 7) {
-
-        return "(" + numeros.slice(0, 2) + ") " + numeros.slice(2);
-
-      }
-
-      if (numeros.length <= 10) {
-
-        return "(" + numeros.slice(0, 2) + ") " +
-
-          numeros.slice(2, 6) + "-" + numeros.slice(6);
-
-      }
-
-      return "(" + numeros.slice(0, 2) + ") " +
-
-        numeros.slice(2, 7) + "-" + numeros.slice(7);
-
+    function fecharFila() {
+      document.getElementById("fila").hidden = true;
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
-
-    telefone.addEventListener("input", () => {
-
-      telefone.value = formatarTelefone(telefone.value);
-
-    });
-
-    // Recupera dados somente se o cliente escolheu lembrá-los.
-
-    try {
-
-      const dados = localStorage.getItem("inhoCorteCliente");
-
-      if (dados) {
-
-        const cliente = JSON.parse(dados);
-
-        nome.value = cliente.nome || "";
-
-        telefone.value = cliente.telefone || "";
-
-        lembrar.checked = true;
-
-      }
-
-    } catch (erro) {
-
-      console.warn("Não foi possível recuperar os dados salvos.");
-
-    }
-
-    form.addEventListener("submit", (evento) => {
-
-      evento.preventDefault();
-
-      const nomeCliente = nome.value.trim();
-
-      const telefoneNumeros = telefone.value.replace(/\D/g, "");
-
-      if (nomeCliente.length < 2) {
-
-        mostrarMensagem("Digite seu nome corretamente.");
-
-        nome.focus();
-
-        return;
-
-      }
-
-      if (telefoneNumeros.length < 10 ||
-
-          telefoneNumeros.length > 11) {
-
-        mostrarMensagem("Confira seu telefone com DDD.");
-
-        telefone.focus();
-
-        return;
-
-      }
-
-      if (lembrar.checked) {
-
-        try {
-
-          localStorage.setItem("inhoCorteCliente", JSON.stringify({
-
-            nome: nomeCliente,
-
-            telefone: telefone.value
-
-          }));
-
-        } catch (erro) {
-
-          mostrarMensagem(
-
-            "Não foi possível salvar seus dados neste dispositivo."
-
-          );
-
-          return;
-
-        }
-
-      } else {
-
-        localStorage.removeItem("inhoCorteCliente");
-
-      }
-
-      mostrarMensagem(
-
-        "Dados conferidos! A tela de entrada e confirmação na fila será conectada na próxima etapa. Você ainda não entrou na fila."
-
-      );
-
-    });
-
-    document.getElementById("apagarDados").addEventListener("click", () => {
-
-      try {
-
-        localStorage.removeItem("inhoCorteCliente");
-
-      } catch (erro) {
-
-        // Continua permitindo limpar os campos.
-
-      }
-
-      nome.value = "";
-
-      telefone.value = "";
-
-      lembrar.checked = false;
-
-      mostrarMensagem("Os dados lembrados neste dispositivo foram apagados.");
-
-    });
-
   </script>
-
 </body>
-
 </html>
