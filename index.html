@@ -4,193 +4,507 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barbearia Inho Dú Corte — Fila On-line</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --bg-color: #0b0b0b;
-            --card-bg: #161616;
-            --gold: #d4af37;
-            --gold-light: #f3e5ab;
+            --bg-body: #0a0a0c;
+            --card-bg: rgba(22, 22, 26, 0.85);
+            --card-border: rgba(212, 175, 55, 0.2);
+            --gold-primary: #d4af37;
+            --gold-gradient: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #aa8c2c 100%);
             --text-white: #ffffff;
-            --text-gray: #a0a0a0;
-            --accent-green: #25d366;
+            --text-muted: #9a9a9a;
+            --green-whatsapp: #25d366;
+            --radius-lg: 16px;
+            --radius-sm: 10px;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-white); padding-bottom: 50px; }
-        header { text-align: center; padding: 30px 20px; border-bottom: 2px solid var(--gold); background: linear-gradient(to bottom, #1a1a1a, #0b0b0b); }
-        h1 { color: var(--gold); font-size: 1.8rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        p.subtitle { color: var(--text-gray); font-size: 0.95rem; }
-        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
-        .card { background-color: var(--card-bg); border: 1px solid #333; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .status-box { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .badge { background-color: rgba(212, 175, 55, 0.15); color: var(--gold); border: 1px solid var(--gold); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; }
-        .queue-count { font-size: 2.2rem; font-weight: bold; color: var(--gold); text-align: center; margin: 10px 0; }
-        .btn { display: block; width: 100%; padding: 15px; background: linear-gradient(135deg, #d4af37, #aa8c2c); color: #000; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; text-align: center; text-decoration: none; cursor: pointer; margin-top: 15px; text-transform: uppercase; transition: 0.2s; box-shadow: 0 4px 10px rgba(212,175,55,0.3); }
-        .btn:active { transform: scale(0.98); }
-        .btn-whatsapp { background: var(--accent-green); color: #fff; box-shadow: 0 4px 10px rgba(37,211,102,0.3); }
-        h2 { font-size: 1.2rem; color: var(--gold); margin-bottom: 12px; border-left: 4px solid var(--gold); padding-left: 8px; }
-        ul.services-list { list-style: none; }
-        ul.services-list li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #222; font-size: 0.95rem; }
-        ul.services-list li span:last-child { color: var(--gold); font-weight: bold; }
-        /* Chatbot Robot */
-        #chatbot-container { margin-top: 15px; background: #111; border: 1px solid var(--gold); border-radius: 10px; padding: 15px; display: none; }
-        .chat-msg { background: #222; padding: 10px 14px; border-radius: 8px; margin-bottom: 10px; font-size: 0.95rem; line-height: 1.4; }
-        .chat-msg.bot { border-left: 3px solid var(--gold); }
-        .chat-msg.user { background: #2a2a2a; text-align: right; color: var(--gold-light); }
-        input.chat-input { width: 100%; padding: 12px; background: #000; border: 1px solid #444; color: #fff; border-radius: 6px; margin-top: 10px; font-size: 1rem; }
-        footer { text-align: center; color: var(--text-gray); font-size: 0.8rem; margin-top: 40px; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        body {
+            background-color: var(--bg-body);
+            background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+            color: var(--text-white);
+            padding-bottom: 60px;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 35px 20px 25px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            position: relative;
+        }
+
+        .logo-badge {
+            width: 70px;
+            height: 70px;
+            background: var(--gold-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.8rem;
+            color: #000;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-top: 4px;
+        }
+
+        .container {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Status & Counter */
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(37, 211, 102, 0.1);
+            color: #2ecc71;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #2ecc71;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #2ecc71;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .counter-box {
+            text-align: center;
+            padding: 15px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 18px;
+        }
+
+        .counter-num {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--gold-primary);
+            line-height: 1;
+            margin-top: 5px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Buttons */
+        .btn-main {
+            width: 100%;
+            padding: 16px;
+            background: var(--gold-gradient);
+            color: #000;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.25);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-main:active { transform: scale(0.98); }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: #fff;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.2);
+        }
+
+        /* Chatbot Interface */
+        #chat-section {
+            display: none;
+            scroll-margin-top: 20px;
+        }
+
+        .chat-box {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 380px;
+            overflow-y: auto;
+            padding-right: 5px;
+            margin-bottom: 15px;
+        }
+
+        .chat-bubble {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 0.92rem;
+            line-height: 1.4;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-bubble.bot {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: #eee;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .chat-bubble.user {
+            background: var(--gold-gradient);
+            color: #000;
+            font-weight: 600;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-input {
+            width: 100%;
+            padding: 14px;
+            background: #000;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            outline: none;
+        }
+
+        .chat-input:focus { border-color: var(--gold-primary); }
+
+        /* Service Cards Grid */
+        .service-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 14px 16px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .service-card:hover, .service-card.selected {
+            border-color: var(--gold-primary);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .service-title { font-weight: 700; font-size: 0.95rem; color: #fff; }
+        .service-price { color: var(--gold-primary); font-weight: 700; font-size: 0.9rem; }
+
+        section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gold-primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
 
     <header>
+        <div class="logo-badge"><i class="fa-solid fa-scissors"></i></div>
         <h1>Barbearia Inho Dú Corte</h1>
-        <p class="subtitle">Fila On-line & Atendimento Profissional</p>
+        <p class="subtitle"><i class="fa-solid fa-location-dot" style="color: var(--gold-primary);"></i> Atendimento Profissional • Bahia</p>
     </header>
 
     <div class="container">
-        <!-- Status da Fila -->
+
+        <!-- STATUS DA FILA -->
         <div class="card">
-            <div class="status-box">
-                <span class="badge">🔥 Fila Aberta</span>
-                <span style="color: var(--text-gray); font-size: 0.85rem;">Horário: 08:00 às 20:00</span>
+            <div class="status-header">
+                <div class="status-pill">
+                    <span class="pulse-dot"></span> Fila Aberta
+                </div>
+                <span style="color: var(--text-muted); font-size: 0.8rem;"><i class="fa-regular fa-clock"></i> 08:00 às 20:00</span>
             </div>
-            <p style="text-align: center; color: var(--text-gray); font-size: 0.9rem;">Clientes aguardando no momento:</p>
-            <div class="queue-count" id="fila-quantidade">0</div>
+
+            <div class="counter-box">
+                <p style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Clientes na Fila Agora</p>
+                <div class="counter-num" id="total-fila-num">0</div>
+            </div>
+
+            <button class="btn-main" onclick="iniciarChat()">
+                <i class="fa-solid fa-right-to-bracket"></i> ENTRAR NA FILA ON-LINE
+            </button>
+            <button class="btn-secondary" onclick="verMinhaVez()">
+                <i class="fa-solid fa-clock-rotate-left"></i> Acompanhar Minha Vez
+            </button>
+        </div>
+
+        <!-- ATENDENTE VIRTUAL (CHAT) -->
+        <div class="card" id="chat-section">
+            <div class="section-title" style="color: var(--gold-primary); font-weight: 700; margin-bottom: 15px;">
+                <i class="fa-solid fa-robot"></i> Atendente Virtual Inho
+            </div>
             
-            <button class="btn" onclick="iniciarAtendimento()">Entrar na Fila</button>
-            <button class="btn" style="background: #333; color: #fff; margin-top: 8px;" onclick="verAcompanhamento()">Acompanhar Minha Vez</button>
+            <div class="chat-box" id="chat-box"></div>
+            <div id="chat-controls"></div>
         </div>
 
-        <!-- Robô Atendente (Chat) -->
-        <div class="card" id="chatbot-container">
-            <h2>Robô Atendente</h2>
-            <div id="chat-messages"></div>
-            <div id="chat-input-area"></div>
-        </div>
-
-        <!-- Tabela de Serviços -->
+        <!-- LISTA DE SERVIÇOS -->
         <div class="card">
-            <h2>Serviços & Preços</h2>
-            <ul class="services-list" id="lista-servicos">
-                <li><span>Corte de Cabelo</span><span>A definir</span></li>
-                <li><span>Corte na Tesoura</span><span>A definir</span></li>
-                <li><span>Degradê</span><span>A definir</span></li>
-                <li><span>Cabelo e Barba</span><span>A definir</span></li>
-                <li><span>Barba</span><span>A definir</span></li>
-                <li><span>Sobrancelha</span><span>A definir</span></li>
-                <li><span>Acabamento</span><span>A definir</span></li>
-            </ul>
+            <div class="section-title" style="color: var(--gold-primary); font-weight: 700; margin-bottom: 12px; font-size: 1rem;">
+                <i class="fa-solid fa-list-check"></i> Serviços e Tabela de Preços
+            </div>
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-title"><i class="fa-solid fa-scissors" style="color:var(--gold-primary); margin-right:8px;"></i> Corte de Cabelo</div>
+                    <div class="service-price">A definir</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-title"><i class="fa-solid fa-scissors" style="color:var(--gold-primary); margin-right:8px;"></i> Corte na Tesoura</div>
+                    <div class="service-price">A definir</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-title"><i class="fa-solid fa-layer-group" style="color:var(--gold-primary); margin-right:8px;"></i> Degradê</div>
+                    <div class="service-price">A definir</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-title"><i class="fa-solid fa-user-ninja" style="color:var(--gold-primary); margin-right:8px;"></i> Cabelo e Barba</div>
+                    <div class="service-price">A definir</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-title"><i class="fa-solid fa-user" style="color:var(--gold-primary); margin-right:8px;"></i> Barba</div>
+                    <div class="service-price">A definir</div>
+                </div>
+                <div class="service-card">
+                    <div class="service-title"><i class="fa-solid fa-eye" style="color:var(--gold-primary); margin-right:8px;"></i> Sobrancelha</div>
+                    <div class="service-price">A definir</div>
+                </div>
+            </div>
         </div>
 
-        <!-- Botão WhatsApp -->
+        <!-- CONTATO WHATSAPP -->
         <div class="card" style="text-align: center;">
-            <h2>Fale Conosco</h2>
-            <p style="color: var::text-gray; font-size: 0.9rem; margin-bottom: 12px;">Dúvidas ou orientações direto com a barbearia.</p>
-            <a href="https://wa.me/5500000000000" target="_blank" class="btn btn-whatsapp">Chamar no WhatsApp</a>
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 12px;">Prefere combinar algo direto com a gente?</p>
+            <a href="https://wa.me/5500000000000" target="_blank" style="text-decoration: none;">
+                <button class="btn-main btn-whatsapp">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Falar pelo WhatsApp
+                </button>
+            </a>
         </div>
+
     </div>
 
     <footer>
-        &copy; 2026 Barbearia Inho Dú Corte. Todos os direitos reservados.
+        &copy; 2026 Barbearia Inho Dú Corte • Fila On-line Inteligente
     </footer>
 
     <script>
-        let etapa = 0;
-        let dadosCliente = { nome: '', whatsapp: '', servico: '' };
+        let passo = 0;
+        let cliente = { nome: '', whatsapp: '', servico: '' };
 
-        function iniciarAtendimento() {
-            document.getElementById('chatbot-container').style.display = 'block';
-            etapa = 1;
-            renderChat();
-            window.scrollTo({ top: 400, behavior: 'smooth' });
+        function atualizarContador() {
+            let fila = JSON.parse(localStorage.getItem('fila_inho') || '[]');
+            document.getElementById('total-fila-num').innerText = fila.length;
         }
 
-        function renderChat() {
-            const container = document.getElementById('chat-messages');
-            const inputArea = document.getElementById('chat-input-area');
-            container.innerHTML = '';
-            inputArea.innerHTML = '';
+        function iniciarChat() {
+            const sec = document.getElementById('chat-section');
+            sec.style.display = 'block';
+            sec.scrollIntoView({ behavior: 'smooth' });
+            passo = 1;
+            proximoPasso();
+        }
 
-            if (etapa === 1) {
-                container.innerHTML += `<div class="chat-msg bot">Fala, meu cria! 🤜🏾🤛🏾 Seja bem-vindo à Barbearia Inho Dú Corte! 💈 Vou te ajudar a entrar na nossa fila on-line. Bora começar?</div>`;
-                inputArea.innerHTML = `<button class="btn" onclick="etapa=2; renderChat();">BORA COMEÇAR</button>`;
-            } else if (etapa === 2) {
-                container.innerHTML += `<div class="chat-msg user">Bora começar</div>`;
-                container.innerHTML += `<div class="chat-msg bot">Primeiro, me diz teu nome completo, meu mano:</div>`;
-                inputArea.innerHTML = `<input type="text" id="resp-nome" class="chat-input" placeholder="Digite seu nome..." autofocus><button class="btn" onclick="salvarNome()">Avançar</button>`;
-            } else if (etapa === 3) {
-                container.innerHTML += `<div class="chat-msg user">${dadosCliente.nome}</div>`;
-                container.innerHTML += `<div class="chat-msg bot">Qual é teu número de WhatsApp com DDD para contato?</div>`;
-                inputArea.innerHTML = `<input type="tel" id="resp-zap" class="chat-input" placeholder="(00) 00000-0000" autofocus><button class="btn" onclick="salvarZap()">Avançar</button>`;
-            } else if (etapa === 4) {
-                container.innerHTML += `<div class="chat-msg user">${dadosCliente.whatsapp}</div>`;
-                container.innerHTML += `<div class="chat-msg bot">Qual serviço você vai mandar hoje, ${dadosCliente.nome.split(' ')[0]}?</div>`;
-                inputArea.innerHTML = `
-                    <button class="btn" style="margin-top:5px; background:#222; color:#fff; border:1px solid var(--gold)" onclick="escolherServico('Corte de Cabelo')">Corte de Cabelo</button>
-                    <button class="btn" style="margin-top:5px; background:#222; color:#fff; border:1px solid var(--gold)" onclick="escolherServico('Degradê')">Degradê</button>
-                    <button class="btn" style="margin-top:5px; background:#222; color:#fff; border:1px solid var(--gold)" onclick="escolherServico('Cabelo e Barba')">Cabelo e Barba</button>
-                    <button class="btn" style="margin-top:5px; background:#222; color:#fff; border:1px solid var(--gold)" onclick="escolherServico('Barba')">Barba</button>
+        function addBotMsg(txt) {
+            const box = document.getElementById('chat-box');
+            box.innerHTML += `<div class="chat-bubble bot">${txt}</div>`;
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function addUserMsg(txt) {
+            const box = document.getElementById('chat-box');
+            box.innerHTML += `<div class="chat-bubble user">${txt}</div>`;
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function proximoPasso() {
+            const ctrl = document.getElementById('chat-controls');
+            ctrl.innerHTML = '';
+
+            if (passo === 1) {
+                document.getElementById('chat-box').innerHTML = '';
+                addBotMsg("Fala, meu cria! 🤜🏾🤛🏾 Seja bem-vindo à Barbearia Inho Dú Corte! 💈 Vou te colocar na fila sem enrolação. Bora lá?");
+                ctrl.innerHTML = `<button class="btn-main" onclick="passo=2; proximoPasso();">BORA COMEÇAR</button>`;
+            } 
+            else if (passo === 2) {
+                addUserMsg("Bora começar!");
+                addBotMsg("Qual é o teu nome completo, meu mano?");
+                ctrl.innerHTML = `
+                    <input type="text" id="in-nome" class="chat-input" placeholder="Digite seu nome..." autofocus>
+                    <button class="btn-main" onclick="salvarNome()">Avançar <i class="fa-solid fa-arrow-right"></i></button>
                 `;
-            } else if (etapa === 5) {
-                container.innerHTML += `<div class="chat-msg user">${dadosCliente.servico}</div>`;
-                container.innerHTML += `<div class="chat-msg bot">Resumo: <br><b>Nome:</b> ${dadosCliente.nome}<br><b>WhatsApp:</b> ${dadosCliente.whatsapp}<br><b>Serviço:</b> ${dadosCliente.servico}<br><br>Tá tudo certo, meu mano? Posso confirmar tua entrada na fila?</div>`;
-                inputArea.innerHTML = `
-                    <button class="btn" onclick="finalizarEntrada()">CONFIRMAR E ENTRAR NA FILA</button>
-                    <button class="btn" style="background:#444; color:#fff;" onclick="etapa=2; renderChat();">Corrigir Dados</button>
+            } 
+            else if (passo === 3) {
+                addUserMsg(cliente.nome);
+                addBotMsg(`Fechou, ${cliente.nome.split(' ')[0]}! Agora me manda teu WhatsApp com DDD pra gente te avisar quando chegar tua vez:`);
+                ctrl.innerHTML = `
+                    <input type="tel" id="in-zap" class="chat-input" placeholder="(75) 99999-9999" autofocus>
+                    <button class="btn-main" onclick="salvarZap()">Avançar <i class="fa-solid fa-arrow-right"></i></button>
                 `;
-            } else if (etapa === 6) {
-                container.innerHTML += `<div class="chat-msg bot">🔥 Fechou, meu mano! Tu já está na fila da Barbearia Inho Dú Corte. Acompanha tua posição pelo site e fica ligado quando chegar sua vez. Lembrando: a fila on-line não é hora marcada!</div>`;
+            } 
+            else if (passo === 4) {
+                addUserMsg(cliente.whatsapp);
+                addBotMsg("Show! Escolha abaixo o serviço que você vai mandar hoje:");
+                ctrl.innerHTML = `
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <button class="btn-secondary" style="border-color:var(--gold-primary);" onclick="setServico('Corte de Cabelo')">✂️ Corte de Cabelo</button>
+                        <button class="btn-secondary" style="border-color:var(--gold-primary);" onclick="setServico('Degradê')">💈 Degradê</button>
+                        <button class="btn-secondary" style="border-color:var(--gold-primary);" onclick="setServico('Cabelo e Barba')">🪒 Cabelo e Barba</button>
+                        <button class="btn-secondary" style="border-color:var(--gold-primary);" onclick="setServico('Barba')">🧔🏽‍♂️ Barba</button>
+                        <button class="btn-secondary" style="border-color:var(--gold-primary);" onclick="setServico('Sobrancelha')">👁️ Sobrancelha</button>
+                    </div>
+                `;
+            } 
+            else if (passo === 5) {
+                addUserMsg(`Serviço: ${cliente.servico}`);
+                addBotMsg(`Confirma teus dados, meu mano:<br><br><b>Nome:</b> ${cliente.nome}<br><b>WhatsApp:</b> ${cliente.whatsapp}<br><b>Serviço:</b> ${cliente.servico}<br><br>Podemos confirmar tua entrada na fila?`);
+                ctrl.innerHTML = `
+                    <button class="btn-main" onclick="confirmarFila()">CONFIRMAR E ENTRAR NA FILA 🔥</button>
+                    <button class="btn-secondary" onclick="passo=2; proximoPasso();">Corrigir Informações</button>
+                `;
+            } 
+            else if (passo === 6) {
+                addBotMsg("🔥 **TUDO PRONTO, MEU CRIA!** Você entrou na fila! Fique atento ao site para acompanhar sua posição. Lembrando: a fila é por ordem de chegada no site!");
+                ctrl.innerHTML = `<button class="btn-secondary" onclick="document.getElementById('chat-section').style.display='none';">Fechar Atendente</button>`;
                 
-                // Salvar na memória do navegador para simular a fila
+                // Salvar na Fila
                 let fila = JSON.parse(localStorage.getItem('fila_inho') || '[]');
-                fila.push(dadosCliente);
+                fila.push(cliente);
                 localStorage.setItem('fila_inho', JSON.stringify(fila));
-                atualizarContadorFila();
+                atualizarContador();
             }
         }
 
         function salvarNome() {
-            const val = document.getElementById('resp-nome').value.trim();
-            if(!val) { alert('Por favor, digite seu nome.'); return; }
-            dadosCliente.nome = val;
-            etapa = 3;
-            renderChat();
+            let val = document.getElementById('in-nome').value.trim();
+            if(!val) return alert("Digite seu nome para continuar!");
+            cliente.nome = val;
+            passo = 3;
+            proximoPasso();
         }
 
         function salvarZap() {
-            const val = document.getElementById('resp-zap').value.trim();
-            if(!val) { alert('Por favor, digite seu WhatsApp.'); return; }
-            dadosCliente.whatsapp = val;
-            etapa = 4;
-            renderChat();
+            let val = document.getElementById('in-zap').value.trim();
+            if(!val) return alert("Digite seu número de WhatsApp!");
+            cliente.whatsapp = val;
+            passo = 4;
+            proximoPasso();
         }
 
-        function escolherServico(serv) {
-            dadosCliente.servico = serv;
-            etapa = 5;
-            renderChat();
+        function setServico(serv) {
+            cliente.servico = serv;
+            passo = 5;
+            proximoPasso();
         }
 
-        function finalizarEntrada() {
-            etapa = 6;
-            renderChat();
+        function confirmarFila() {
+            passo = 6;
+            proximoPasso();
         }
 
-        function atualizarContadorFila() {
-            let fila = JSON.parse(localStorage.getItem('fila_inho') || '[]');
-            document.getElementById('fila-quantidade').innerText = fila.length;
-        }
-
-        function verAcompanhamento() {
+        function verMinhaVez() {
             let fila = JSON.parse(localStorage.getItem('fila_inho') || '[]');
             if(fila.length === 0) {
-                alert('Você ainda não entrou na fila ou a fila está vazia.');
+                alert("A fila está vazia no momento!");
             } else {
-                alert(`Você está cadastrado! Há ${fila.length} pessoa(s) na fila geral.`);
+                alert(`Existem ${fila.length} cliente(s) aguardando na fila.`);
             }
         }
 
-        window.onload = atualizarContadorFila;
+        window.onload = atualizarContador;
     </script>
 </body>
 </html>
