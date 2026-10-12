@@ -1,490 +1,352 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080808">
-<meta name="description" content="Barbearia Inho Dú Corte. Confira os serviços e entre na fila on-line.">
-<title>Inho Dú Corte | Barbearia</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090909">
+<title>Barbearia Inho Dú Corte | Fila On-line</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root {
-  --gold: #d7ad55;
-  --bg: #080808;
-  --card: #141414;
-  --text: #f5f5f5;
-  --muted: #a6a6a6;
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-}
-a { color: inherit; text-decoration: none; }
-button, input { font: inherit; }
-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: rgba(8,8,8,.96);
-  border-bottom: 1px solid #292929;
-}
-.nav {
-  max-width: 1100px;
-  margin: auto;
-  padding: 16px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-}
-.logo {
-  color: var(--gold);
-  font-size: 19px;
-  font-weight: 900;
-}
-nav { display: flex; gap: 18px; font-size: 13px; }
-nav a:hover { color: var(--gold); }
-
-.hero {
-  min-height: 510px;
-  padding: 85px 22px;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  background:
-    radial-gradient(ellipse at 50% 30%, #342715 0%, #15110b 35%, #080808 75%);
-}
-.hero-content { max-width: 760px; }
-.tag {
-  display: inline-block;
-  border: 1px solid #72592c;
-  color: var(--gold);
-  border-radius: 30px;
-  padding: 9px 15px;
-  font-size: 12px;
-  letter-spacing: 2px;
-}
-h1 {
-  font-size: clamp(39px, 8vw, 76px);
-  line-height: 1.02;
-  margin: 25px 0 18px;
-}
-h1 span, h2 span { color: var(--gold); }
-.hero p {
-  color: #c3c3c3;
-  line-height: 1.7;
-  max-width: 530px;
-  margin: 0 auto 28px;
-}
-.actions {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--gold);
-  border-radius: 8px;
-  padding: 14px 20px;
-  cursor: pointer;
-  font-weight: 800;
-  transition: .2s;
-}
-.btn-gold { background: var(--gold); color: #111; }
-.btn-outline { color: var(--gold); background: transparent; }
-.btn:hover { transform: translateY(-2px); opacity: .9; }
-
-section {
-  max-width: 1100px;
-  padding: 65px 22px;
-  margin: auto;
-}
-.section-head { text-align: center; margin-bottom: 32px; }
-h2 { font-size: clamp(28px, 5vw, 42px); margin: 0 0 12px; }
-.section-head p { color: var(--muted); line-height: 1.6; }
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 17px;
-}
-.card {
-  background: var(--card);
-  border: 1px solid #292929;
-  border-radius: 13px;
-  padding: 24px;
-}
-.card .symbol { font-size: 28px; }
-.card h3 { margin: 14px 0 9px; }
-.card p { color: var(--muted); line-height: 1.6; font-size: 14px; }
-.price { color: var(--gold); font-size: 23px; font-weight: 900; }
-.queue-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 22px;
-  align-items: start;
-}
-.queue-card {
-  background: linear-gradient(145deg, #191919, #0e0e0e);
-  border: 1px solid #4e4028;
-  border-radius: 15px;
-  padding: 27px;
-}
-label { display: block; margin: 18px 0 8px; font-size: 14px; }
-input {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid #383838;
-  background: #080808;
-  color: white;
-  border-radius: 8px;
-  outline: none;
-}
-input:focus { border-color: var(--gold); }
-.full { width: 100%; margin-top: 16px; }
-.notice {
-  color: #d0b77e;
-  font-size: 12px;
-  line-height: 1.6;
-}
-.queue-list { padding: 0; list-style: none; }
-.queue-list li {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 14px 0;
-  border-bottom: 1px solid #292929;
-}
-.position { color: var(--gold); font-weight: bold; }
-#queueMessage { line-height: 1.6; margin-top: 16px; }
-.bot-box {
-  max-width: 650px;
-  margin: auto;
-  background: var(--card);
-  border: 1px solid #333;
-  border-radius: 14px;
-  padding: 24px;
-}
-.bot-answer {
-  background: #222;
-  border-radius: 10px;
-  padding: 15px;
-  color: #ddd;
-  line-height: 1.6;
-  min-height: 65px;
-  margin-bottom: 15px;
-}
-.bot-options { display: flex; flex-wrap: wrap; gap: 9px; }
-.bot-options button {
-  border: 1px solid #6e572e;
-  background: transparent;
-  color: var(--gold);
-  border-radius: 30px;
-  padding: 10px 14px;
-  cursor: pointer;
-}
-.contact {
-  text-align: center;
-  border: 1px solid #3b3020;
-  border-radius: 15px;
-  background: #12100c;
-  padding: 35px 20px;
-}
-footer {
-  text-align: center;
-  color: #888;
-  border-top: 1px solid #252525;
-  padding: 28px 15px;
-  font-size: 12px;
-  line-height: 1.8;
-}
-.whatsapp-float {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 20;
-  background: #20c76a;
-  color: #061b0d;
-  padding: 15px 18px;
-  border-radius: 40px;
-  font-weight: 900;
-  box-shadow: 0 5px 25px #0009;
-}
-@media (max-width: 700px) {
-  nav { gap: 10px; font-size: 11px; }
-  .nav { padding: 14px 12px; }
-  .logo { font-size: 15px; }
-  .grid { grid-template-columns: 1fr; }
-  .queue-layout { grid-template-columns: 1fr; }
-  .hero { min-height: 460px; padding: 65px 18px; }
-  section { padding: 48px 17px; }
-}
+:root{--bg:#090909;--card:#151515;--gold:#d9b568;--text:#f8f5ed;--muted:#aaa}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+header{padding:18px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #292929;position:sticky;top:0;background:#090909f5;z-index:5}
+.logo{font-weight:900;letter-spacing:1px}.logo span,h1 span,h2 span{color:var(--gold)}
+header a:last-child{border:1px solid var(--gold);padding:10px 13px;border-radius:7px;color:var(--gold);font-size:13px}
+.hero{padding:80px 6%;text-align:center;background:radial-gradient(ellipse,#392a15,#090909 70%)}
+.tag{color:var(--gold);font-size:11px;letter-spacing:3px;font-weight:bold}
+h1{font-size:clamp(42px,8vw,76px);line-height:1.03;margin:22px 0}
+.hero p,.intro{color:#c4c0b7;line-height:1.7;max-width:570px;margin:0 auto 25px}
+.btn{border:0;background:var(--gold);color:#15110a;font-weight:bold;padding:14px 18px;border-radius:7px;cursor:pointer;display:inline-block}
+main section.content{max-width:1050px;margin:auto;padding:58px 20px}
+.heading{text-align:center;margin-bottom:30px}
+.heading p{color:var(--muted);line-height:1.6}
+h2{font-size:clamp(28px,5vw,40px);margin:10px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card,.panel{background:var(--card);border:1px solid #302b21;border-radius:12px;padding:22px}
+.card h3{margin:12px 0 8px}.card p{color:var(--muted);font-size:13px;line-height:1.5;min-height:38px}
+.price{font-size:22px;color:var(--gold);font-weight:bold}
+.booking{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:start}
+label{display:block;font-size:13px;margin:16px 0 7px}
+input[type=text],input[type=tel],input[type=search]{width:100%;padding:13px;background:#090909;color:white;border:1px solid #39352d;border-radius:7px;outline:none}
+input:focus{border-color:var(--gold)}
+.service-option{display:flex;align-items:center;gap:10px;padding:13px;border:1px solid #39352d;border-radius:8px;margin:8px 0;cursor:pointer}
+.service-option:has(input:checked){border-color:var(--gold);background:#241d11}
+.service-option input{accent-color:var(--gold)}
+.service-option .sname{flex:1;font-size:13px}
+.service-option small{display:block;color:var(--muted);margin-top:4px}
+.service-option b{color:var(--gold);font-size:12px;white-space:nowrap}
+.total{display:flex;justify-content:space-between;align-items:center;border-block:1px solid #39352d;padding:18px 0;margin:20px 0}
+.total strong{font-size:24px;color:var(--gold)}
+.consent{display:flex;gap:9px;align-items:flex-start;font-size:11px;line-height:1.6;color:#c5c0b6}
+.consent input{margin-top:3px;accent-color:var(--gold)}
+.full{width:100%;margin-top:18px}
+.small{font-size:11px;color:var(--muted);line-height:1.6}
+.chat{background:#222018;border:1px solid #393020;border-radius:9px;padding:15px;font-size:13px;line-height:1.7;margin:18px 0}
+.chat-buttons{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.chat-buttons button{background:#211b10;color:var(--gold);border:1px solid #5c4827;border-radius:20px;padding:9px 12px;cursor:pointer;font-size:12px}
+.message{font-size:13px;line-height:1.6;margin-top:13px;overflow-wrap:anywhere}
+.error{color:#ffaaaa}.success{color:#7ee2a5}
+.position{font-size:70px;color:var(--gold);font-weight:900;margin:20px 0 5px}
+.status{display:inline-block;background:#302718;color:var(--gold);padding:8px 12px;border-radius:30px;font-size:12px}
+.line{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #333;padding:13px 0;font-size:12px}
+.line span{color:var(--muted)}.line strong{text-align:right}
+footer{text-align:center;border-top:1px solid #292929;padding:30px 15px;color:#999;font-size:12px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.booking{grid-template-columns:1fr}.hero{padding:65px 20px}main section.content{padding:45px 16px}header{padding:15px}.card p{min-height:0}}
 </style>
 </head>
-
 <body>
 <header>
-  <div class="nav">
-    <a class="logo" href="#inicio">✂ INHO DÚ CORTE</a>
-    <nav>
-      <a href="#servicos">Serviços</a>
-      <a href="#fila">Fila on-line</a>
-      <a href="#atendimento">Atendimento</a>
-    </nav>
-  </div>
+  <a class="logo" href="#inicio">✂ INHO DÚ <span>CORTE</span></a>
+  <a href="#fila">Entrar na fila</a>
 </header>
 
 <main>
-  <section class="hero" id="inicio" style="max-width:none">
-    <div class="hero-content">
-      <span class="tag">ESTILO • RESPEITO • QUALIDADE</span>
-      <h1>SEU CORTE.<br><span>SEU ESTILO.</span></h1>
-      <p>
-        Bem-vindo à Barbearia Inho Dú Corte.
-        Seu visual em boas mãos. Entre na fila on-line
-        e acompanhe as informações antes de sair de casa.
-      </p>
-      <div class="actions">
-        <a class="btn btn-gold" href="#fila">💈 ENTRAR NA FILA</a>
-        <a class="btn btn-outline" href="#servicos">VER SERVIÇOS</a>
+<section class="hero" id="inicio">
+  <div class="tag">ESTILO • RESPEITO • QUALIDADE</div>
+  <h1>SEU CORTE.<br><span>SEU ESTILO.</span></h1>
+  <p>Bem-vindo à Barbearia Inho Dú Corte! Escolha seus serviços, informe seus dados e acompanhe sua entrada na fila on-line.</p>
+  <a class="btn" href="#fila">GARANTIR MINHA VAGA ↗</a>
+</section>
+
+<section class="content" id="servicos">
+  <div class="heading"><div class="tag">ESCOLHA SEU ESTILO</div><h2>NOSSOS <span>SERVIÇOS</span></h2><p>Confira os serviços e selecione o que deseja fazer.</p></div>
+  <div class="grid" id="serviceCards"><div class="card">Carregando serviços...</div></div>
+</section>
+
+<section class="content" id="fila">
+  <div class="heading"><div class="tag">ATENDIMENTO ON-LINE</div><h2>GARANTA SUA <span>VAGA</span></h2><p>A fila on-line não é hora marcada. Ela organiza a ordem dos atendimentos.</p></div>
+
+  <div class="booking">
+    <div class="panel">
+      <h3>🤖 Robô atendente</h3>
+      <div class="chat" id="botMessage" aria-live="polite">Salve, família! 💈 Vou te ajudar a entrar na fila. Primeiro, preencha seu nome e WhatsApp e escolha seus serviços.</div>
+
+      <form id="queueForm">
+        <label for="customerName">Nome completo *</label>
+        <input id="customerName" type="text" minlength="2" maxlength="80" autocomplete="name" required placeholder="Digite seu nome">
+
+        <label for="customerPhone">WhatsApp com DDD *</label>
+        <input id="customerPhone" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" required placeholder="(75) 99999-9999">
+
+        <label>Quais serviços você vai fazer? *</label>
+        <div id="serviceChoices">Carregando serviços...</div>
+
+        <div class="total"><span>Total estimado</span><strong id="totalPrice">R$ 0,00</strong></div>
+
+        <label class="consent"><input id="consent" type="checkbox" required><span>Autorizo o uso do meu nome e telefone para organizar meu atendimento e consultar o status da fila.</span></label>
+
+        <button class="btn full" id="submitButton" type="submit">CONFIRMAR E ENTRAR NA FILA ↗</button>
+        <div class="message" id="formMessage" role="status"></div>
+        <p class="small">Seus dados pessoais não aparecem na lista pública. Guarde este navegador para acompanhar sua posição.</p>
+      </form>
+    </div>
+
+    <aside class="panel">
+      <div class="tag">ACOMPANHAMENTO</div>
+      <h3>Sua posição na fila</h3>
+      <div id="emptyStatus"><p class="small">Depois de confirmar a entrada, sua posição e o status aparecerão aqui.</p></div>
+      <div id="ticketStatus" hidden>
+        <div class="position" id="position">—</div>
+        <div class="status" id="status">Aguardando</div>
+        <div class="line"><span>Nome</span><strong id="ticketName">—</strong></div>
+        <div class="line"><span>Serviços</span><strong id="ticketServices">—</strong></div>
+        <div class="line"><span>Total</span><strong id="ticketTotal">—</strong></div>
+        <p class="small">A posição pode mudar conforme os atendimentos. Acompanhe esta página para conferir atualizações.</p>
+        <button class="btn full" id="clearTicket" type="button">Limpar acompanhamento</button>
       </div>
-    </div>
-  </section>
+    </aside>
+  </div>
+</section>
 
-  <section id="servicos">
-    <div class="section-head">
-      <h2>NOSSOS <span>SERVIÇOS</span></h2>
-      <p>Escolha seu estilo. Consulte os valores antes de vir.</p>
+<section class="content">
+  <div class="heading"><div class="tag">PRECISA DE AJUDA?</div><h2>FALA COM NOSSO <span>ROBÔ</span></h2><p>Escolha uma pergunta para receber orientação.</p></div>
+  <div class="panel">
+    <div class="chat" id="assistantReply" aria-live="polite">Salve! Escolha uma pergunta abaixo que eu te explico.</div>
+    <div class="chat-buttons">
+      <button type="button" data-q="fila">Como funciona a fila?</button>
+      <button type="button" data-q="hora">É hora marcada?</button>
+      <button type="button" data-q="preco">Como vejo os preços?</button>
     </div>
-
-    <div class="grid">
-      <article class="card">
-        <div class="symbol">✂️</div>
-        <h3>Corte masculino</h3>
-        <p>Do clássico ao degradê, no estilo que combina contigo.</p>
-        <div class="price">R$ 25,00</div>
-      </article>
-      <article class="card">
-        <div class="symbol">🧔</div>
-        <h3>Barba</h3>
-        <p>Acabamento alinhado para completar seu visual.</p>
-        <div class="price">R$ 15,00</div>
-      </article>
-      <article class="card">
-        <div class="symbol">🔥</div>
-        <h3>Corte + barba</h3>
-        <p>Visual completo, com cuidado em cada detalhe.</p>
-        <div class="price">R$ 35,00</div>
-      </article>
-    </div>
-    <p class="notice">Importante: altere os serviços e preços acima para os valores reais da sua barbearia.</p>
-  </section>
-
-  <section id="fila">
-    <div class="section-head">
-      <h2>GARANTA SUA <span>VAGA</span></h2>
-      <p>Entre na fila pelo celular e confira sua posição.</p>
-    </div>
-
-    <div class="queue-layout">
-      <div class="queue-card">
-        <h3>💈 Entrar na fila</h3>
-        <p style="color:#aaa;line-height:1.6">
-          Informe seu nome para entrar na fila demonstrativa.
-        </p>
-        <form id="queueForm">
-          <label for="clientName">Seu nome</label>
-          <input id="clientName" maxlength="60" required
-                 placeholder="Digite seu nome">
-
-          <button class="btn btn-gold full" type="submit">
-            ENTRAR NA FILA
-          </button>
-        </form>
-        <div id="queueMessage" aria-live="polite"></div>
-        <p class="notice">
-          A fila on-line não é hora marcada. A posição pode mudar
-          conforme o atendimento.
-        </p>
-      </div>
-
-      <div class="queue-card">
-        <h3>📋 Fila deste dispositivo</h3>
-        <p style="color:#aaa;font-size:13px">
-          Demonstração local — não representa a fila real da barbearia.
-        </p>
-        <ul class="queue-list" id="queueList">
-          <li>Nenhum cliente cadastrado ainda.</li>
-        </ul>
-        <button class="btn btn-outline full" id="clearQueue" type="button">
-          LIMPAR DEMONSTRAÇÃO
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <section id="atendimento">
-    <div class="section-head">
-      <h2>ATENDENTE <span>VIRTUAL</span></h2>
-      <p>Escolha uma opção para receber informações rápidas.</p>
-    </div>
-    <div class="bot-box">
-      <div class="bot-answer" id="botAnswer" aria-live="polite">
-        Salve, família! 🤝 Seja bem-vindo à Barbearia Inho Dú Corte.
-        Como posso te ajudar?
-      </div>
-      <div class="bot-options">
-        <button data-answer="fila">Fila on-line</button>
-        <button data-answer="horario">Horário de funcionamento</button>
-        <button data-answer="precos">Preços dos serviços</button>
-        <button data-answer="contato">Contato</button>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="contact">
-      <h2>PARTIU <span>CORTAR?</span></h2>
-      <p style="color:#aaa;line-height:1.7">
-        Acesse a fila on-line e venha preparado para renovar o visual.
-      </p>
-      <a class="btn btn-gold" href="#fila">GARANTIR MINHA VAGA</a>
-    </div>
-  </section>
+    <form id="assistantForm">
+      <label for="question">Ou digite sua pergunta</label>
+      <input id="question" type="text" maxlength="500" placeholder="Escreva aqui...">
+      <button class="btn full" type="submit">PERGUNTAR AO ROBÔ</button>
+    </form>
+  </div>
+</section>
 </main>
 
-<footer>
-  <strong style="color:#d7ad55">BARBEARIA INHO DÚ CORTE</strong><br>
-  Seu estilo começa aqui. 💈<br>
-  © <span id="year"></span> — Todos os direitos reservados.
-</footer>
-
-<a class="whatsapp-float" id="whatsappLink"
-   href="https://wa.me/5500000000000"
-   target="_blank" rel="noopener noreferrer">
-   WhatsApp ↗
-</a>
+<footer>✂ BARBEARIA INHO DÚ CORTE<br><br>Seu estilo começa aqui. © <span id="year"></span></footer>
 
 <script>
-// ============================================
-// CONFIGURAÇÕES: EDITE ANTES DE PUBLICAR
-// ============================================
+/* CONFIGURE A URL E A CHAVE PUBLICA DO SUPABASE AQUI */
+const SUPABASE_URL = "COLE_A_URL_DO_SEU_PROJETO";
+const SUPABASE_ANON_KEY = "COLE_A_CHAVE_PUBLICA_ANON";
 
-// Coloque seu número com código do Brasil e DDD.
-// Exemplo de formato: 5571999999999
-const WHATSAPP = "5500000000000";
+const $ = id => document.getElementById(id);
+const money = n => Number(n || 0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const configured = window.supabase &&
+  SUPABASE_URL.startsWith("https://") &&
+  !SUPABASE_URL.includes("COLE_") &&
+  SUPABASE_ANON_KEY.length > 20 &&
+  !SUPABASE_ANON_KEY.includes("COLE_");
 
-// A fila abaixo é apenas uma demonstração local.
-// Para vários clientes verem a mesma fila, conecte
-// um banco de dados e configure regras de segurança.
+const db = configured
+  ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY)
+  : null;
 
-const form = document.getElementById("queueForm");
-const nameInput = document.getElementById("clientName");
-const queueList = document.getElementById("queueList");
-const queueMessage = document.getElementById("queueMessage");
-const storageKey = "inhoDuCorteDemoQueue";
+let services = [];
+let poller = null;
+let token = null;
+const TOKEN_KEY = "inho_du_corte_ticket_token";
 
-let queue = [];
+function bot(text){ $("botMessage").textContent = text; }
+function message(text,type=""){ $("formMessage").textContent=text; $("formMessage").className="message "+type; }
+function phoneDigits(value){ return value.replace(/\D/g,""); }
 
-try {
-  queue = JSON.parse(localStorage.getItem(storageKey) || "[]");
-  if (!Array.isArray(queue)) queue = [];
-} catch {
-  queue = [];
+function selectedServices(){
+  const ids = [...document.querySelectorAll(".service-check:checked")].map(x=>x.value);
+  return services.filter(s=>ids.includes(s.id));
 }
-
-function saveQueue() {
-  try {
-    localStorage.setItem(storageKey, JSON.stringify(queue));
-  } catch {}
+function updateTotal(){
+  const chosen=selectedServices();
+  $("totalPrice").textContent=money(chosen.reduce((sum,s)=>sum+Number(s.price),0));
+  return chosen;
 }
+function renderServices(){
+  $("serviceCards").replaceChildren();
+  $("serviceChoices").replaceChildren();
 
-function renderQueue() {
-  queueList.replaceChildren();
-
-  if (queue.length === 0) {
-    const li = document.createElement("li");
-    li.textContent = "Nenhum cliente cadastrado ainda.";
-    queueList.appendChild(li);
+  if(!services.length){
+    $("serviceCards").textContent="Nenhum serviço cadastrado. O responsável precisa cadastrar serviços no Supabase.";
+    $("serviceChoices").textContent="Serviços indisponíveis no momento.";
     return;
   }
 
-  queue.forEach((client, index) => {
-    const li = document.createElement("li");
-    const name = document.createElement("span");
-    const position = document.createElement("span");
+  services.forEach((s,i)=>{
+    const card=document.createElement("article");
+    card.className="card";
+    const icon=document.createElement("div");
+    icon.style.color="var(--gold)";
+    icon.style.fontSize="25px";
+    icon.textContent=["✂","◈","✦","◆"][i%4];
+    const h=document.createElement("h3"); h.textContent=s.name;
+    const p=document.createElement("p"); p.textContent=s.description||"Serviço da barbearia.";
+    const price=document.createElement("div"); price.className="price"; price.textContent=money(s.price);
+    card.append(icon,h,p,price); $("serviceCards").append(card);
 
-    name.textContent = client.name;
-    position.textContent = "#" + (index + 1);
-    position.className = "position";
-
-    li.append(name, position);
-    queueList.appendChild(li);
+    const label=document.createElement("label"); label.className="service-option";
+    const check=document.createElement("input"); check.type="checkbox"; check.className="service-check"; check.value=s.id;
+    check.addEventListener("change",()=>{
+      const chosen=updateTotal();
+      if(chosen.length) bot("Boa! Você escolheu "+chosen.map(x=>x.name).join(", ")+". Total estimado: "+money(chosen.reduce((sum,x)=>sum+Number(x.price),0))+". Agora confira seus dados e confirme.");
+    });
+    const name=document.createElement("span"); name.className="sname";
+    const strong=document.createElement("strong"); strong.textContent=s.name;
+    const desc=document.createElement("small"); desc.textContent=s.description||"";
+    name.append(strong,desc);
+    const priceText=document.createElement("b"); priceText.textContent=money(s.price);
+    label.append(check,name,priceText); $("serviceChoices").append(label);
   });
 }
+async function loadServices(){
+  if(!db){
+    services=[
+      {id:"demo-corte",name:"Corte masculino",description:"Do clássico ao degradê.",price:25},
+      {id:"demo-barba",name:"Barba",description:"Acabamento alinhado.",price:15},
+      {id:"demo-sobrancelha",name:"Sobrancelha",description:"Detalhe que completa o visual.",price:5}
+    ];
+    renderServices();
+    bot("Salve, família! Estou em modo de demonstração. Para registrar uma vaga real, configure o Supabase no código e execute o SQL.");
+    return;
+  }
+  const {data,error}=await db.from("services").select("id,name,description,price").eq("active",true).order("sort_order");
+  if(error){
+    console.error(error);
+    $("serviceCards").textContent="Não foi possível carregar os serviços. Confira a configuração do Supabase.";
+    $("serviceChoices").textContent="Serviços indisponíveis.";
+    return;
+  }
+  services=data||[];
+  renderServices();
+}
+function renderTicket(t){
+  $("emptyStatus").hidden=true;
+  $("ticketStatus").hidden=false;
+  $("position").textContent=t.position==null?"—":"#"+t.position;
+  $("status").textContent=({waiting:"Aguardando",in_service:"Em atendimento",completed:"Concluído",cancelled:"Cancelado"})[t.status]||t.status;
+  $("ticketName").textContent=t.customer_name||"Cliente";
+  $("ticketServices").textContent=Array.isArray(t.services)?t.services.join(", "):"—";
+  $("ticketTotal").textContent=money(t.total_price);
+}
+async function refreshStatus(){
+  if(!db||!token)return;
+  const {data,error}=await db.rpc("get_queue_status",{p_ticket_token:token});
+  if(error){console.error(error);return;}
+  const t=Array.isArray(data)?data[0]:data;
+  if(t)renderTicket(t);
+}
+function startPolling(){
+  if(poller)clearInterval(poller);
+  refreshStatus();
+  poller=setInterval(refreshStatus,15000);
+}
+function validPhone(d){return (d.length===10||d.length===11)&&!/^(\d)\1+$/.test(d);}
 
-form.addEventListener("submit", function(event) {
-  event.preventDefault();
+$("customerPhone").addEventListener("input",()=>{
+  const d=phoneDigits($("customerPhone").value).slice(0,11);
+  let f=d;
+  if(d.length>2&&d.length<=6)f="("+d.slice(0,2)+") "+d.slice(2);
+  else if(d.length>6&&d.length<=10)f="("+d.slice(0,2)+") "+d.slice(2,6)+"-"+d.slice(6);
+  else if(d.length>10)f="("+d.slice(0,2)+") "+d.slice(2,7)+"-"+d.slice(7);
+  $("customerPhone").value=f;
+});
 
-  const name = nameInput.value.trim();
-  if (!name) return;
+$("queueForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const name=$("customerName").value.trim();
+  const phone=phoneDigits($("customerPhone").value);
+  const chosen=updateTotal();
 
-  if (queue.some(client =>
-    client.name.toLowerCase() === name.toLowerCase()
-  )) {
-    queueMessage.textContent =
-      "Esse nome já está na fila demonstrativa deste dispositivo.";
+  if(name.length<2){message("Informe seu nome completo.","error");return;}
+  if(!validPhone(phone)){message("Informe um WhatsApp válido com DDD.","error");return;}
+  if(!chosen.length){message("Escolha pelo menos um serviço.","error");bot("Escolhe pelo menos um serviço antes de continuar.");return;}
+  if(!$("consent").checked){message("Autorize o uso dos dados para organizar seu atendimento.","error");return;}
+
+  if(!db){
+    message("Modo demonstração: sua entrada não foi enviada para uma fila real. Configure o Supabase primeiro.","error");
+    bot("Seus dados ainda não foram enviados. O responsável precisa configurar o banco de dados para ativar a fila real.");
     return;
   }
 
-  queue.push({ name: name });
-  saveQueue();
-  renderQueue();
-
-  queueMessage.textContent =
-    "Pronto, " + name +
-    "! Você entrou na fila demonstrativa, posição " +
-    queue.length + ". Atenção: isso ainda não registra uma vaga real.";
-
-  form.reset();
+  $("submitButton").disabled=true;
+  $("submitButton").textContent="REGISTRANDO...";
+  message("");
+  try{
+    const {data,error}=await db.rpc("join_queue",{
+      p_customer_name:name,
+      p_phone:phone,
+      p_service_ids:chosen.map(s=>s.id)
+    });
+    if(error)throw error;
+    const t=Array.isArray(data)?data[0]:data;
+    if(!t||!t.ticket_token)throw new Error("O banco não retornou o código de acompanhamento.");
+    token=t.ticket_token;
+    localStorage.setItem(TOKEN_KEY,token);
+    renderTicket({
+      customer_name:name,
+      services:chosen.map(s=>s.name),
+      total_price:t.total_price,
+      status:t.status,
+      position:t.position
+    });
+    message("Pronto, "+name+"! Sua entrada foi registrada. Guarde este navegador para acompanhar sua posição.","success");
+    bot("Fechou, "+name+"! Sua entrada foi registrada. Serviços: "+chosen.map(s=>s.name).join(", ")+". Total: "+money(t.total_price)+". Sua posição inicial é #"+t.position+". A fila não é hora marcada.");
+    $("queueForm").reset();
+    updateTotal();
+    startPolling();
+  }catch(err){
+    console.error(err);
+    message(err.message||"Não foi possível entrar na fila. Tente novamente.","error");
+  }finally{
+    $("submitButton").disabled=false;
+    $("submitButton").textContent="CONFIRMAR E ENTRAR NA FILA ↗";
+  }
 });
 
-document.getElementById("clearQueue").addEventListener("click", function() {
-  if (!confirm("Quer apagar a fila demonstrativa deste dispositivo?")) return;
-
-  queue = [];
-  saveQueue();
-  renderQueue();
-  queueMessage.textContent = "Demonstração limpa.";
+$("clearTicket").addEventListener("click",()=>{
+  token=null;
+  localStorage.removeItem(TOKEN_KEY);
+  if(poller)clearInterval(poller);
+  $("ticketStatus").hidden=true;
+  $("emptyStatus").hidden=false;
 });
-
-document.getElementById("year").textContent = new Date().getFullYear();
-
-document.getElementById("whatsappLink").href =
-  "https://wa.me/" + WHATSAPP;
-
-const answers = {
-  fila: "A fila on-line ajuda você a acompanhar sua vez. Atenção: esta versão ainda é demonstrativa e não registra vagas reais.",
-  horario: "Consulte os horários diretamente com a Barbearia Inho Dú Corte pelo WhatsApp.",
-  precos: "Corte: R$ 25,00. Barba: R$ 15,00. Corte + barba: R$ 35,00. Confirme os valores com a barbearia.",
-  contato: "Clique no botão verde de WhatsApp no canto da tela para falar com a barbearia."
-};
-
-document.querySelectorAll("[data-answer]").forEach(button => {
-  button.addEventListener("click", () => {
-    document.getElementById("botAnswer").textContent =
-      answers[button.dataset.answer];
-  });
+function ask(question){
+  const q=question.toLowerCase();
+  const answer=q.includes("hora")||q.includes("marcada")
+    ?"Não, família! A fila on-line não é hora marcada. Ela organiza a ordem dos atendimentos. Acompanhe sua posição e aguarde a orientação da barbearia."
+    :q.includes("preço")||q.includes("preco")||q.includes("valor")
+    ?"Os preços aparecem nos cartões de serviços. Selecione um ou mais serviços e o site calcula o total antes de confirmar."
+    :"Para entrar na fila, informe nome e WhatsApp com DDD, escolha os serviços e confirme. Depois, acompanhe sua posição nesta página.";
+  $("assistantReply").textContent=answer;
+}
+document.querySelectorAll("[data-q]").forEach(b=>b.addEventListener("click",()=>ask(b.textContent)));
+$("assistantForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const q=$("question").value.trim();
+  if(!q)return;
+  ask(q);$("question").value="";
 });
+$("year").textContent=new Date().getFullYear();
 
-renderQueue();
+loadServices().then(()=>{
+  if(db){
+    token=localStorage.getItem(TOKEN_KEY);
+    if(token)startPolling();
+  }
+});
 </script>
 </body>
 </html>
