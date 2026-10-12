@@ -2,162 +2,199 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101010">
-  <title>Barbearia Inho Dú Corte</title>
-  <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: #101010;
-      color: #fff;
-      font-family: Arial, sans-serif;
-    }
-
-    header {
-      text-align: center;
-      padding: 35px 18px;
-      background: #080808;
-      border-bottom: 2px solid #d6ad54;
-    }
-
-    .logo {
-      color: #d6ad54;
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
-
-    header p { color: #ccc; }
-
-    main {
-      max-width: 650px;
-      margin: auto;
-      padding: 20px;
-    }
-
-    .card {
-      background: #1c1c1c;
-      border: 1px solid #393939;
-      border-radius: 14px;
-      padding: 22px;
-      margin-bottom: 18px;
-    }
-
-    h2 { color: #d6ad54; }
-
-    .service {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px 0;
-      border-bottom: 1px solid #383838;
-    }
-
-    .price { color: #d6ad54; font-weight: bold; }
-
-    button {
-      display: block;
-      width: 100%;
-      padding: 15px;
-      margin-top: 12px;
-      border: none;
-      border-radius: 9px;
-      background: #d6ad54;
-      color: #111;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .secondary {
-      background: #333;
-      color: #fff;
-    }
-
-    .note {
-      color: #bbb;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    footer {
-      text-align: center;
-      color: #aaa;
-      padding: 20px;
-      font-size: 13px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101010">
+<title>Barbearia Inho Dú Corte</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101010;color:#fff;font-family:Arial,sans-serif}
+header{text-align:center;padding:28px 15px;background:#080808;border-bottom:2px solid #d6ad54}
+.logo{color:#d6ad54;font-size:27px;font-weight:900}
+main{max-width:650px;margin:auto;padding:18px}
+.card{background:#1c1c1c;border:1px solid #393939;border-radius:14px;padding:20px;margin-bottom:16px}
+h2{color:#d6ad54;margin-top:0}
+label{display:block;margin:12px 0 6px}
+input:not([type=checkbox]){width:100%;padding:13px;background:#101010;border:1px solid #444;border-radius:8px;color:#fff;font-size:16px}
+button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:8px;background:#d6ad54;color:#111;font-weight:bold;font-size:16px}
+.service,.entry{padding:12px;background:#111;border:1px solid #383838;border-radius:8px;margin:8px 0}
+.service{display:flex;align-items:center;gap:10px}
+.service input{width:20px;height:20px}
+.service label{flex:1;margin:0}
+.price{color:#d6ad54;font-weight:bold}
+.note{color:#bbb;font-size:13px;line-height:1.5}
+.position{font-size:36px;color:#d6ad54;font-weight:bold}
+[hidden]{display:none!important}
+</style>
 </head>
 <body>
-  <header>
-    <div class="logo">INHO DÚ CORTE</div>
-    <p>Seu estilo, nosso compromisso! 💈</p>
-  </header>
+<header>
+  <div class="logo">INHO DÚ CORTE</div>
+  <p>Seu estilo, nosso compromisso! 💈</p>
+</header>
 
-  <main>
-    <section class="card">
-      <h2>Bem-vindo, família!</h2>
-      <p>
-        Seja bem-vindo à Barbearia Inho Dú Corte.
-        Aqui seu corte é tratado na régua!
-      </p>
-      <button onclick="mostrarFila()">Entrar na fila on-line</button>
-      <p class="note">
-        Atenção: a fila on-line não é hora marcada.
-      </p>
-    </section>
+<main>
+  <section class="card">
+    <h2>Bem-vindo, família!</h2>
+    <p>Garanta sua vaga na Barbearia Inho Dú Corte.</p>
+    <p class="note">A fila on-line não é hora marcada.</p>
+    <button id="openForm">ENTRAR NA FILA ON-LINE</button>
+  </section>
 
-    <section class="card">
-      <h2>Nossos serviços</h2>
-      <div class="service">
-        <span>Corte masculino</span>
-        <span class="price">R$ 25,00</span>
-      </div>
-      <div class="service">
-        <span>Barba</span>
-        <span class="price">R$ 15,00</span>
-      </div>
-      <div class="service">
-        <span>Sobrancelha</span>
-        <span class="price">R$ 5,00</span>
-      </div>
-    </section>
+  <section class="card" id="formCard" hidden>
+    <h2>Seus dados</h2>
+    <form id="joinForm">
+      <label for="name">Nome completo</label>
+      <input id="name" required maxlength="80" autocomplete="name">
 
-    <section class="card" id="fila" hidden>
-      <h2>Fila on-line</h2>
-      <p>
-        A próxima etapa será o cadastro do cliente e
-        o gerenciamento da fila neste aparelho.
-      </p>
-      <p class="note">
-        Esta versão inicial ainda não registra entradas
-        nem compartilha a fila entre celulares.
-      </p>
-      <button class="secondary" onclick="fecharFila()">
-        Voltar à página inicial
+      <label for="phone">WhatsApp com DDD</label>
+      <input id="phone" type="tel" required maxlength="20"
+             placeholder="(75) 99999-9999" autocomplete="tel">
+
+      <label>Escolha os serviços</label>
+      <div id="services"></div>
+
+      <p>Valor total: <strong id="total" class="price">R$ 0,00</strong></p>
+      <label><input id="terms" type="checkbox" required>
+        Confirmo meus dados e quero entrar na fila.
+      </label>
+      <button type="submit">CONFIRMAR MINHA VAGA</button>
+      <button type="button" id="cancelForm" style="background:#333;color:#fff">
+        Voltar
       </button>
-    </section>
-  </main>
+    </form>
+    <p id="message" role="status"></p>
+  </section>
 
-  <footer>
-    Barbearia Inho Dú Corte • Feito para a família! ✂️
-  </footer>
+  <section class="card">
+    <h2>Minha posição</h2>
+    <div id="myStatus"><p class="note">Sua posição aparecerá aqui após o cadastro neste aparelho.</p></div>
+  </section>
 
-  <script>
-    function mostrarFila() {
-      document.getElementById("fila").hidden = false;
-      document.getElementById("fila").scrollIntoView({
-        behavior: "smooth"
-      });
+  <section class="card">
+    <h2>Fila deste aparelho</h2>
+    <div id="queue"></div>
+    <p class="note">Esta fila é local e não é sincronizada com outros celulares.</p>
+  </section>
+</main>
+
+<script>
+(() => {
+  const services = [
+    {id:"corte",name:"Corte masculino",price:25},
+    {id:"barba",name:"Barba",price:15},
+    {id:"sobrancelha",name:"Sobrancelha",price:5}
+  ];
+  const key = "inho_fila_local_v2";
+  const $ = id => document.getElementById(id);
+  const money = n => n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+  let entries = [];
+  let myId = null;
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(key) || "[]");
+    if (Array.isArray(saved)) entries = saved;
+  } catch(e) {}
+
+  function save() {
+    try {
+      localStorage.setItem(key,JSON.stringify(entries));
+      return true;
+    } catch(e) {
+      alert("Não foi possível salvar os dados neste aparelho.");
+      return false;
     }
+  }
 
-    function fecharFila() {
-      document.getElementById("fila").hidden = true;
-      window.scrollTo({ top: 0, behavior: "smooth" });
+  function escapeHTML(s) {
+    return String(s).replace(/[&<>"']/g,c=>({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    })[c]);
+  }
+
+  $("services").innerHTML = services.map(s=>`
+    <div class="service">
+      <input type="checkbox" id="s-${s.id}" value="${s.id}" class="svc">
+      <label for="s-${s.id}">${s.name}</label>
+      <span class="price">${money(s.price)}</span>
+    </div>`).join("");
+
+  function chosen() {
+    const ids = [...document.querySelectorAll(".svc:checked")].map(x=>x.value);
+    return services.filter(s=>ids.includes(s.id));
+  }
+
+  function updateTotal() {
+    $("total").textContent = money(chosen().reduce((sum,s)=>sum+s.price,0));
+  }
+
+  document.querySelectorAll(".svc").forEach(x=>x.addEventListener("change",updateTotal));
+
+  $("openForm").onclick = () => {
+    $("formCard").hidden = false;
+    $("name").focus();
+  };
+  $("cancelForm").onclick = () => $("formCard").hidden = true;
+
+  function render() {
+    const active = entries.filter(e=>e.status==="waiting"||e.status==="in_progress");
+    $("queue").innerHTML = active.length ? active.map((e,i)=>`
+      <div class="entry">
+        <strong>${i+1}. ${escapeHTML(e.name)}</strong><br>
+        <span class="note">${e.status==="in_progress"?"Em atendimento":"Aguardando"}</span><br>
+        <span class="note">${e.services.map(escapeHTML).join(", ")}</span><br>
+        <span class="price">${money(e.total)}</span>
+      </div>`).join("") : '<p class="note">Ainda não há clientes na fila.</p>';
+
+    const mine = entries.find(e=>e.id===myId);
+    if (!mine) {
+      $("myStatus").innerHTML = '<p class="note">Sua posição aparecerá aqui após o cadastro.</p>';
+      return;
     }
-  </script>
+    const pos = active.findIndex(e=>e.id===myId)+1;
+    const status = mine.status==="waiting"?"Aguardando sua vez":
+      mine.status==="in_progress"?"Chegou sua vez!":
+      mine.status==="completed"?"Atendimento concluído":"Entrada cancelada";
+    $("myStatus").innerHTML = `
+      <p>${escapeHTML(mine.name)}, ${status}.</p>
+      ${pos>0?`<div class="position">${pos}º</div><p class="note">Posição nesta fila local</p>`:""}
+      <p>${mine.services.map(escapeHTML).join(", ")}</p>
+      <strong class="price">${money(mine.total)}</strong>`;
+  }
+
+  $("joinForm").onsubmit = event => {
+    event.preventDefault();
+    const name = $("name").value.trim();
+    const phone = $("phone").value.trim();
+    const selected = chosen();
+    if (name.length<2 || phone.replace(/\D/g,"").length<8 || !selected.length) {
+      $("message").textContent = "Confira seu nome, WhatsApp e os serviços selecionados.";
+      return;
+    }
+    const entry = {
+      id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+Math.random()),
+      name,phone,
+      services:selected.map(s=>s.name),
+      total:selected.reduce((sum,s)=>sum+s.price,0),
+      status:"waiting",
+      createdAt:new Date().toISOString()
+    };
+    entries.push(entry);
+    if (!save()) {
+      entries = entries.filter(e=>e.id!==entry.id);
+      return;
+    }
+    myId=entry.id;
+    $("message").textContent="Vaga registrada neste aparelho!";
+    $("joinForm").reset();
+    updateTotal();
+    $("formCard").hidden=true;
+    render();
+  };
+
+  render();
+  updateTotal();
+})();
+</script>
 </body>
 </html>
