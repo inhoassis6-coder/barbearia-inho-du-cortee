@@ -3,141 +3,358 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Admin — Barbearia Inho Dú Corte</title>
+    <title>Painel Pro — Barbearia Inho Dú Corte</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --bg-color: #0b0b0b;
-            --card-bg: #161616;
-            --gold: #d4af37;
+            --bg-body: #0a0a0c;
+            --card-bg: rgba(22, 22, 26, 0.9);
+            --card-border: rgba(212, 175, 55, 0.25);
+            --gold-primary: #d4af37;
+            --gold-gradient: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #aa8c2c 100%);
             --text-white: #ffffff;
-            --text-gray: #a0a0a0;
-            --accent-red: #e74c3c;
+            --text-muted: #9a9a9a;
             --accent-green: #2ecc71;
+            --accent-red: #e74c3c;
+            --whatsapp-color: #25d366;
+            --radius: 12px;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-white); padding: 20px 10px 50px 10px; }
-        header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid var(--gold); padding-bottom: 15px; }
-        h1 { color: var(--gold); font-size: 1.6rem; text-transform: uppercase; }
-        .container { max-width: 600px; margin: 0 auto; }
-        .card { background-color: var(--card-bg); border: 1px solid #333; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
-        .btn { display: inline-block; width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 8px; text-align: center; font-size: 0.95rem; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg-body); color: var(--text-white); padding-bottom: 50px; }
+        
+        .container { max-width: 650px; margin: 0 auto; padding: 15px; }
+        
+        header { text-align: center; padding: 20px 0; border-bottom: 2px solid var(--gold-primary); margin-bottom: 20px; }
+        h1 { font-size: 1.5rem; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 1px; }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            color: var(--gold-primary);
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 8px;
+        }
+
+        /* Inputs & Buttons */
+        input, select {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 8px;
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .btn-gold { background: var(--gold-gradient); color: #000; }
         .btn-green { background: var(--accent-green); color: #000; }
         .btn-red { background: var(--accent-red); color: #fff; }
-        .btn-gold { background: var(--gold); color: #000; }
-        .btn-outline { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
-        .cliente-item { background: #222; border-left: 4px solid var(--gold); padding: 15px; margin-bottom: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; }
-        .cliente-info h3 { font-size: 1.1rem; color: #fff; }
-        .cliente-info p { font-size: 0.85rem; color: var(--text-gray); margin-top: 4px; }
-        .actions { display: flex; gap: 5px; }
-        .actions button { padding: 8px 12px; font-size: 0.8rem; border-radius: 5px; border: none; cursor: pointer; font-weight: bold; }
-        #login-modal { text-align: center; }
-        input[type="password"] { width: 100%; padding: 12px; background: #000; border: 1px solid #444; color: #fff; border-radius: 6px; margin: 15px 0; font-size: 1rem; text-align: center; }
+        .btn-outline { background: transparent; border: 1px solid var(--gold-primary); color: var(--gold-primary); }
+
+        /* Queue List */
+        .cliente-card {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--gold-primary);
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .cliente-header { display: flex; justify-content: space-between; align-items: center; }
+        .cliente-nome { font-weight: 800; font-size: 1.05rem; }
+        .cliente-tag { background: rgba(212,175,55,0.15); color: var(--gold-primary); padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; }
+        
+        .action-row { display: flex; gap: 8px; margin-top: 5px; }
+        .action-row button { flex: 1; padding: 10px; font-size: 0.8rem; border-radius: 6px; }
+
+        /* Login Modal */
+        #login-screen { text-align: center; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- TELA DE LOGIN DO INHO -->
-        <div class="card" id="login-modal">
-            <h1 style="margin-bottom: 10px;">Painel do Inho 💈</h1>
-            <p style="color: var(--text-gray); font-size: 0.9rem;">Digite a senha para acessar a gestão da fila:</p>
-            <input type="password" id="senha-admin" placeholder="Digite sua senha">
-            <button class="btn btn-gold" onclick="autenticar()">Entrar no Painel</button>
+
+        <!-- TELA DE LOGIN -->
+        <div class="card" id="login-screen">
+            <h1 style="margin-bottom: 10px;"><i class="fa-solid fa-lock"></i> Acesso Restrito</h1>
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 15px;">Digite a senha da Barbearia Inho Dú Corte:</p>
+            <input type="password" id="pass-input" placeholder="Sua senha..." style="text-align: center;">
+            <button class="btn btn-gold" onclick="fazerLogin()">ENTRAR NO PAINEL</button>
         </div>
 
-        <!-- CONTEÚDO PRINCIPAL (OCULTO ATÉ LOGAR) -->
-        <div id="painel-conteudo" style="display: none;">
+        <!-- PAINEL COMPLETO (OCULTO ATÉ LOGAR) -->
+        <div id="admin-main" style="display: none;">
+
             <header>
-                <h1>Gestão da Fila</h1>
-                <p style="color: var(--text-gray); font-size: 0.85rem; margin-top: 5px;">Barbearia Inho Dú Corte</p>
+                <h1>Painel Master — Inho Dú Corte</h1>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Gestão de Fila & Configurações Automáticas</p>
             </header>
 
-            <!-- Controle da Fila -->
+            <!-- CONTROLE DE FILA & AUTOMAÇÃO -->
             <div class="card">
-                <h2 style="color: var(--gold); font-size: 1.1rem; margin-bottom: 10px;">Controle Geral</h2>
-                <div style="display: flex; gap: 10px;">
-                    <button class="btn btn-green" onclick="alert('Fila Aberta!')">Abrir Fila</button>
-                    <button class="btn btn-red" onclick="alert('Fila Pausada!')">Pausar Fila</button>
+                <div class="card-title"><i class="fa-solid fa-power-off"></i> Automação & Horários da Fila</div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                    <div>
+                        <label style="font-size: 0.75rem; color: var(--text-muted);">Abertura Automática</label>
+                        <input type="time" id="hora-abrir" value="08:00">
+                    </div>
+                    <div>
+                        <label style="font-size: 0.75rem; color: var(--text-muted);">Fechamento Automático</label>
+                        <input type="time" id="hora-fechar" value="20:00">
+                    </div>
                 </div>
-                <button class="btn btn-outline" style="margin-top: 10px;" onclick="limparFila()">Esvaziar / Limpar Fila do Dia</button>
+
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-green" onclick="mudarStatusFila(true)"><i class="fa-solid fa-play"></i> Fila Aberta</button>
+                    <button class="btn btn-red" onclick="mudarStatusFila(false)"><i class="fa-solid fa-pause"></i> Pausar Fila</button>
+                </div>
+                <button class="btn btn-outline" style="margin-top: 10px;" onclick="salvarHorarios()"><i class="fa-solid fa-floppy-disk"></i> Salvar Horários</button>
             </div>
 
-            <!-- Lista de Clientes na Fila -->
+            <!-- CLIENTES NA FILA EM TEMPO REAL -->
             <div class="card">
-                <h2 style="color: var(--gold); font-size: 1.1rem; margin-bottom: 15px;">Clientes Aguardando (<span id="total-clientes">0</span>)</h2>
-                <div id="lista-fila">
-                    <p style="text-align: center; color: var(--text-gray);">Nenhum cliente na fila no momento.</p>
+                <div class="card-title">
+                    <i class="fa-solid fa-users"></i> Fila de Atendimento (<span id="count-admin">0</span>)
                 </div>
+                
+                <div id="lista-admin-fila">
+                    <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">Nenhum cliente na fila no momento.</p>
+                </div>
+
+                <button class="btn btn-outline" style="border-color:#555; color:#aaa; margin-top: 15px;" onclick="limparTodaFila()">
+                    <i class="fa-solid fa-trash"></i> Esvaziar Fila do Dia
+                </button>
             </div>
+
+            <!-- EDITAR SERVIÇOS E PREÇOS -->
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-pen-to-square"></i> Gerenciar Serviços e Preços</div>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 12px;">Cadastre ou edite os preços exibidos para os clientes:</p>
+                
+                <input type="text" id="novo-servico-nome" placeholder="Nome do Serviço (Ex: Degradê Especial)">
+                <input type="text" id="novo-servico-preco" placeholder="Preço R$ (Ex: 35,00)">
+                <button class="btn btn-gold" onclick="adicionarServico()"><i class="fa-solid fa-plus"></i> Cadastrar Serviço</button>
+
+                <div id="lista-servicos-admin" style="margin-top: 15px;"></div>
+            </div>
+
+            <!-- RELATÓRIO RÁPIDO DO DIA -->
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-chart-line"></i> Resumo de Atendimentos</div>
+                <p style="font-size: 0.9rem;"><b>Cortes Concluídos Hoje:</b> <span id="atendidos-count" style="color:var(--gold-primary);">0</span></p>
+            </div>
+
         </div>
+
     </div>
 
-    <script>
-        const SENHA_CORRETA = "inho123"; // Senha padrão (você pode alterar aqui)
+    <!-- AUDIO DE NOTIFICAÇÃO DE NOVO CLIENTE -->
+    <audio id="sound-bell" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
 
-        function autenticar() {
-            const senha = document.getElementById('senha-admin').value;
-            if (senha === SENHA_CORRETA) {
-                document.getElementById('login-modal').style.display = 'none';
-                document.getElementById('painel-conteudo').style.display = 'block';
-                carregarFilaAdmin();
+    <script>
+        const SENHA_PADRAO = "inho123";
+        let ultimosClientesCount = 0;
+
+        function fazerLogin() {
+            const pass = document.getElementById('pass-input').value;
+            if (pass === SENHA_PADRAO) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('admin-main').style.display = 'block';
+                iniciarPainel();
             } else {
-                alert('Senha incorreta, meu mano!');
+                alert("Senha incorreta, meu mano!");
             }
         }
 
-        function carregarFilaAdmin() {
+        function iniciarPainel() {
+            renderFilaAdmin();
+            renderServicosAdmin();
+            // Verificação contínua a cada 5 segundos para checar se entrou cliente novo
+            setInterval(checarNovosClientes, 5000);
+        }
+
+        function renderFilaAdmin() {
             let fila = JSON.parse(localStorage.getItem('fila_inho') || '[]');
-            const container = document.getElementById('lista-fila');
-            document.getElementById('total-clientes').innerText = fila.length;
+            const container = document.getElementById('lista-admin-fila');
+            document.getElementById('count-admin').innerText = fila.length;
 
             if (fila.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: var(--text-gray);">Nenhum cliente na fila no momento.</p>';
+                container.innerHTML = '<p style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">Nenhum cliente na fila no momento.</p>';
                 return;
             }
 
             container.innerHTML = '';
             fila.forEach((cli, idx) => {
+                const numZap = cli.whatsapp.replace(/\D/g, '');
+                const msgZap = encodeURIComponent(`Fala, ${cli.nome}! 🔥 Chegou tua vez na Barbearia Inho Dú Corte. Pode colar! 💈`);
+                const linkZap = `https://wa.me/55${numZap}?text=${msgZap}`;
+
                 container.innerHTML += `
-                    <div class="cliente-item">
-                        <div class="cliente-info">
-                            <h3>#${idx + 1} - ${cli.nome}</h3>
-                            <p><b>Serviço:</b> ${cli.servico}</p>
-                            <p><b>Zap:</b> ${cli.whatsapp}</p>
+                    <div class="cliente-card">
+                        <div class="cliente-header">
+                            <span class="cliente-nome">#${idx + 1} - ${cli.nome}</span>
+                            <span class="cliente-tag">${cli.servico}</span>
                         </div>
-                        <div class="actions">
-                            <button class="btn-green" onclick="atenderCliente(${idx})">Atender</button>
-                            <button class="btn-red" onclick="removerCliente(${idx})">Sair</button>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">
+                            <i class="fa-brands fa-whatsapp" style="color:var(--whatsapp-color)"></i> ${cli.whatsapp}
+                        </div>
+                        <div class="action-row">
+                            <a href="${linkZap}" target="_blank" style="text-decoration:none; flex:1;">
+                                <button class="btn btn-green" style="margin:0;"><i class="fa-brands fa-whatsapp"></i> Chamar</button>
+                            </a>
+                            <button class="btn btn-gold" style="margin:0;" onclick="concluirAtendimento(${idx})"><i class="fa-solid fa-check"></i> Finalizar</button>
+                            <button class="btn btn-red" style="margin:0; flex: 0.5;" onclick="removerCliente(${idx})"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                     </div>
                 `;
             });
         }
 
-        function atenderCliente(index) {
+        function checarNovosClientes() {
             let fila = JSON.parse(localStorage.getItem('fila_inho') || '[]');
-            const cliente = fila[index];
-            if (confirm(`Concluir atendimento de ${cliente.nome}?`)) {
-                fila.splice(index, 1);
-                localStorage.setItem('fila_inho', JSON.stringify(fila));
-                carregarFilaAdmin();
+            if (fila.length > ultimosClientesCount && ultimosClientesCount !== 0) {
+                // Toca som de notificação quando entra alguém novo
+                document.getElementById('sound-bell').play().catch(e=>console.log(e));
+                alert("🔔 NOVO CLIENTE NA FILA DA BARBEARIA!");
             }
+            ultimosClientesCount = fila.length;
+            renderFilaAdmin();
+        }
+
+        function concluirAtendimento(index) {
+            let fila = JSON.parse(localStorage.getItem('fila_inho') || '[]');
+            fila.splice(index, 1);
+            localStorage.setItem('fila_inho', JSON.stringify(fila));
+            
+            // Incrementa contador de concluídos
+            let concluidos = parseInt(localStorage.getItem('atendidos_hoje') || '0') + 1;
+            localStorage.setItem('atendidos_hoje', concluidos);
+            document.getElementById('atendidos-count').innerText = concluidos;
+
+            renderFilaAdmin();
         }
 
         function removerCliente(index) {
-            let fila = JSON.parse(localStorage.getItem('fila_inho') || '[]');
-            if (confirm(`Remover cliente da fila?`)) {
+            if (confirm("Remover esse cliente da fila?")) {
+                let fila = JSON.parse(localStorage.getItem('fila_inho') || '[]');
                 fila.splice(index, 1);
                 localStorage.setItem('fila_inho', JSON.stringify(fila));
-                carregarFilaAdmin();
+                renderFilaAdmin();
             }
         }
 
-        function limparFila() {
-            if (confirm('Tem certeza que quer apagar todos os clientes da fila hoje?')) {
+        function limparTodaFila() {
+            if (confirm("Tem certeza que quer limpar toda a fila de hoje?")) {
                 localStorage.removeItem('fila_inho');
-                carregarFilaAdmin();
+                renderFilaAdmin();
             }
+        }
+
+        function mudarStatusFila(aberta) {
+            localStorage.setItem('fila_status_manual', aberta ? 'aberta' : 'fechada');
+            alert(aberta ? "Fila ABERTA com sucesso!" : "Fila PAUSADA/FECHADA!");
+        }
+
+        function salvarHorarios() {
+            const hAbre = document.getElementById('hora-abrir').value;
+            const hFecha = document.getElementById('hora-fechar').value;
+            localStorage.setItem('config_hora_abrir', hAbre);
+            localStorage.setItem('config_hora_fechar', hFecha);
+            alert(`Horários salvos: Abertura às ${hAbre} e Fechamento às ${hFecha}!`);
+        }
+
+        /* GERENCIADOR DE SERVIÇOS */
+        function renderServicosAdmin() {
+            let servicos = JSON.parse(localStorage.getItem('servicos_inho') || '[]');
+            const container = document.getElementById('lista-servicos-admin');
+            
+            if(servicos.length === 0) {
+                // Serviços padrão iniciais
+                servicos = [
+                    {nome: 'Corte de Cabelo', preco: '30,00'},
+                    {nome: 'Corte na Tesoura', preco: '35,00'},
+                    {nome: 'Degradê', preco: '30,00'},
+                    {nome: 'Cabelo e Barba', preco: '50,00'},
+                    {nome: 'Barba', preco: '20,00'},
+                    {nome: 'Sobrancelha', preco: '10,00'}
+                ];
+                localStorage.setItem('servicos_inho', JSON.stringify(servicos));
+            }
+
+            container.innerHTML = '';
+            servicos.forEach((s, idx) => {
+                container.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:10px; border-radius:6px; margin-bottom:6px;">
+                        <span><b>${s.nome}</b> — R$ ${s.preco}</span>
+                        <button class="btn btn-red" style="width:auto; padding:5px 10px; font-size:0.75rem;" onclick="deletarServico(${idx})"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
+        }
+
+        function adicionarServico() {
+            const nome = document.getElementById('novo-servico-nome').value.trim();
+            const preco = document.getElementById('novo-servico-preco').value.trim();
+            if(!nome || !preco) return alert("Preencha o nome e o preço do serviço!");
+
+            let servicos = JSON.parse(localStorage.getItem('servicos_inho') || '[]');
+            servicos.push({nome, preco});
+            localStorage.setItem('servicos_inho', JSON.stringify(servicos));
+            
+            document.getElementById('novo-servico-nome').value = '';
+            document.getElementById('novo-servico-preco').value = '';
+            renderServicosAdmin();
+            alert("Novo serviço cadastrado!");
+        }
+
+        function deletarServico(idx) {
+            let servicos = JSON.parse(localStorage.getItem('servicos_inho') || '[]');
+            servicos.splice(idx, 1);
+            localStorage.setItem('servicos_inho', JSON.stringify(servicos));
+            renderServicosAdmin();
+        }
+
+        window.onload = function() {
+            document.getElementById('atendidos-count').innerText = localStorage.getItem('atendidos_hoje') || '0';
         }
     </script>
 </body>
