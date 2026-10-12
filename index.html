@@ -1,190 +1,476 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#090909">
+<meta name="description" content="Entre na fila on-line da Barbearia Inho Dú Corte. Escolha seus serviços e acompanhe sua posição.">
 <title>Inho Dú Corte | Fila On-line</title>
 
 <style>
 :root {
-  --gold: #d5aa52;
-  --black: #111111;
-  --panel: #1c1c1c;
-  --muted: #aaa;
-  --white: #f7f7f7;
+  --gold: #d6ad55;
+  --gold-light: #f6d98a;
+  --bg: #090909;
+  --card: #151515;
+  --card2: #202020;
+  --text: #f8f8f8;
+  --muted: #a5a5a5;
+  --green: #36d68a;
+  --border: rgba(214,173,85,.22);
 }
+
 * { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
 body {
   margin: 0;
-  background: #101010;
-  color: var(--white);
-  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at top, #292012 0%, transparent 45%),
+    var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
 }
+
+button, input { font: inherit; }
+
+button { -webkit-tap-highlight-color: transparent; }
+
 header {
-  padding: 22px 16px;
   text-align: center;
-  border-bottom: 1px solid #333;
-  background: #151515;
+  padding: 32px 16px 26px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(8,8,8,.8);
 }
+
 .logo {
-  width: 58px;
-  height: 58px;
-  margin: auto auto 10px;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 14px;
   display: grid;
   place-items: center;
   border: 2px solid var(--gold);
-  border-radius: 50%;
-  color: var(--gold);
-  font-weight: bold;
-  font-size: 19px;
+  border-radius: 22px;
+  background: linear-gradient(145deg,#302510,#0b0b0b);
+  color: var(--gold-light);
+  font-weight: 900;
+  font-size: 25px;
+  letter-spacing: -2px;
+  box-shadow: 0 0 30px rgba(214,173,85,.12);
+  transform: rotate(-3deg);
 }
+
 header h1 {
   margin: 0;
-  font-size: 22px;
-  letter-spacing: 1px;
+  font-size: clamp(23px,5vw,34px);
+  font-weight: 900;
+  letter-spacing: 2px;
 }
+
+header h1 span { color: var(--gold); }
+
 header p {
-  color: var(--gold);
-  font-size: 13px;
-  margin: 8px 0 0;
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 2px;
 }
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 17px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  color: var(--gold-light);
+  font-size: 12px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--green);
+}
+
 main {
-  max-width: 650px;
-  margin: 24px auto;
-  padding: 0 14px;
+  width: min(100% - 24px, 760px);
+  margin: 24px auto 40px;
 }
+
 .card {
-  background: var(--panel);
-  border: 1px solid #333;
-  border-radius: 18px;
-  overflow: hidden;
+  margin-bottom: 18px;
+  padding: 20px;
+  background: linear-gradient(145deg,#191919,#111);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(0,0,0,.18);
 }
-.chat-header {
-  padding: 15px;
+
+.section-heading {
   display: flex;
   align-items: center;
   gap: 12px;
-  border-bottom: 1px solid #333;
+  margin-bottom: 17px;
 }
-.bot-icon {
-  width: 43px;
-  height: 43px;
-  border-radius: 50%;
-  background: var(--gold);
-  color: #111;
+
+.section-icon {
+  width: 42px;
+  height: 42px;
   display: grid;
   place-items: center;
-  font-size: 23px;
+  flex-shrink: 0;
+  background: rgba(214,173,85,.12);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  font-size: 21px;
 }
-.chat-header strong { display: block; }
-.online {
-  color: #72d69a;
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.section-heading p {
+  margin: 5px 0 0;
+  color: var(--muted);
   font-size: 12px;
-  margin-top: 5px;
 }
+
+.progress {
+  display: flex;
+  gap: 6px;
+  margin: 20px 0;
+}
+
+.progress-step {
+  height: 5px;
+  flex: 1;
+  background: #333;
+  border-radius: 10px;
+  transition: background .3s, box-shadow .3s;
+}
+
+.progress-step.active,
+.progress-step.done {
+  background: var(--gold);
+  box-shadow: 0 0 10px rgba(214,173,85,.22);
+}
+
+.progress-label {
+  margin-top: -12px;
+  margin-bottom: 17px;
+  color: var(--muted);
+  font-size: 11px;
+  text-align: right;
+}
+
 #chat {
-  min-height: 250px;
-  max-height: 440px;
-  overflow-y: auto;
-  padding: 17px 13px;
   display: flex;
   flex-direction: column;
   gap: 13px;
+  min-height: 160px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 4px 2px 12px;
+  scroll-behavior: smooth;
 }
+
 .message {
+  width: fit-content;
   max-width: 88%;
-  padding: 12px 14px;
-  border-radius: 15px;
-  line-height: 1.5;
+  padding: 13px 15px;
+  border-radius: 16px;
   font-size: 14px;
-  overflow-wrap: anywhere;
+  line-height: 1.55;
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  animation: appear .25s ease-out;
 }
-.bot {
+
+.message.bot {
   align-self: flex-start;
-  background: #303030;
-  border-bottom-left-radius: 4px;
+  background: #242424;
+  border: 1px solid #333;
+  border-bottom-left-radius: 5px;
 }
-.user {
+
+.message.user {
   align-self: flex-end;
-  background: var(--gold);
-  color: #171717;
-  border-bottom-right-radius: 4px;
+  background: linear-gradient(135deg,#f0cf7d,#bd9137);
+  color: #15110a;
+  font-weight: 600;
+  border-bottom-right-radius: 5px;
 }
+
+.message strong { color: var(--gold-light); }
+
+.message.user strong { color: #15110a; }
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 #choices {
-  padding: 0 13px 13px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 10px;
+  margin: 10px 0 16px;
 }
-button {
+
+.choice {
+  position: relative;
+  min-height: 76px;
+  padding: 13px;
+  text-align: left;
+  color: var(--text);
+  background: var(--card2);
+  border: 1px solid #383838;
+  border-radius: 14px;
   cursor: pointer;
-  font-size: 14px;
-  border-radius: 10px;
-  padding: 12px 14px;
+  transition: transform .18s, border-color .18s, background .18s;
+}
+
+.choice:active { transform: scale(.97); }
+
+.choice.selected {
+  background: rgba(214,173,85,.12);
   border: 1px solid var(--gold);
-  background: transparent;
-  color: var(--gold);
 }
-button:disabled {
-  opacity: .5;
-  cursor: not-allowed;
+
+.choice .service-name {
+  display: block;
+  font-weight: 700;
+  font-size: 14px;
+  padding-right: 18px;
 }
-button.primary {
-  background: var(--gold);
-  color: #171717;
-  font-weight: bold;
+
+.choice .service-price {
+  display: block;
+  margin-top: 8px;
+  color: var(--gold-light);
+  font-weight: 800;
 }
-button.selected {
-  background: var(--gold);
-  color: #171717;
+
+.choice .check {
+  position: absolute;
+  top: 11px;
+  right: 11px;
+  color: var(--gold-light);
+  font-size: 17px;
 }
+
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px;
+  background: #0c0c0c;
+  border: 1px solid #333;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.total-line strong { color: var(--gold-light); }
+
 .input-area {
   display: flex;
-  gap: 8px;
-  padding: 13px;
-  border-top: 1px solid #333;
+  gap: 9px;
+  margin-top: 8px;
 }
-input {
-  flex: 1;
+
+.input-area input {
+  width: 100%;
   min-width: 0;
-  border: 1px solid #444;
-  border-radius: 10px;
-  background: #111;
+  padding: 15px;
   color: white;
-  padding: 13px;
-  font-size: 16px;
-  outline-color: var(--gold);
+  background: #0b0b0b;
+  border: 1px solid #383838;
+  border-radius: 13px;
+  outline: none;
 }
-.input-area button { flex-shrink: 0; }
-#inputArea[hidden] { display: none; }
-.info {
-  text-align: center;
+
+.input-area input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(214,173,85,.1);
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 17px;
+  color: #171107;
+  background: linear-gradient(135deg,var(--gold-light),#bf9136);
+  border: 0;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .18s, filter .18s;
+}
+
+.btn:active { transform: scale(.97); }
+.btn:hover { filter: brightness(1.08); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+
+.btn-secondary {
+  color: var(--text);
+  background: #292929;
+  border: 1px solid #404040;
+}
+
+.btn-full { width: 100%; }
+
+#inputArea[hidden],
+#choices[hidden],
+[hidden] { display: none !important; }
+
+.hint {
+  margin: 13px 0 0;
   color: var(--muted);
   font-size: 12px;
   line-height: 1.6;
-  padding: 15px;
 }
-.section-title {
-  color: var(--gold);
-  margin: 24px 0 10px;
-  font-size: 16px;
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 10px;
 }
-.queue-card {
-  background: var(--panel);
+
+.service-card {
+  padding: 16px 10px;
+  text-align: center;
+  background: #202020;
   border: 1px solid #333;
   border-radius: 14px;
-  padding: 15px;
-  line-height: 1.7;
+}
+
+.service-emoji { font-size: 25px; }
+
+.service-card h3 {
+  margin: 10px 0 7px;
+  font-size: 13px;
+}
+
+.service-card p {
+  margin: 0;
+  color: var(--gold-light);
+  font-weight: 800;
   font-size: 14px;
 }
-.price { color: var(--gold); }
+
+.queue-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.queue-top h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.queue-count {
+  padding: 7px 10px;
+  color: var(--gold-light);
+  background: rgba(214,173,85,.1);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  font-size: 12px;
+}
+
+.queue-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 0;
+  border-top: 1px solid #2e2e2e;
+}
+
+.queue-number {
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  color: var(--gold-light);
+  background: #292318;
+  border-radius: 12px;
+  font-weight: 900;
+}
+
+.queue-details { min-width: 0; flex: 1; }
+
+.queue-details strong {
+  display: block;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.queue-details small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.queue-price {
+  color: var(--gold-light);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.empty {
+  padding: 22px 10px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.notice {
+  padding: 14px;
+  color: #d7d7d7;
+  background: #19170f;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
 footer {
+  padding: 10px 15px 30px;
   text-align: center;
   color: #777;
-  font-size: 12px;
-  padding: 20px 10px 30px;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+footer strong { color: var(--gold); }
+
+@media (max-width: 480px) {
+  header { padding-top: 25px; }
+  main { width: calc(100% - 20px); margin-top: 16px; }
+  .card { padding: 16px; border-radius: 17px; }
+  #choices { gap: 8px; }
+  .choice { padding: 11px; }
+  .services-grid { gap: 7px; }
+  .service-card { padding: 13px 5px; }
+  .service-card h3 { font-size: 12px; }
+  .input-area { gap: 7px; }
+  .input-area .btn { padding: 12px; }
 }
 </style>
 </head>
@@ -192,356 +478,467 @@ footer {
 <body>
 <header>
   <div class="logo">IDC</div>
-  <h1>INHO DÚ CORTE</h1>
-  <p>FILA ON-LINE · ATENDIMENTO VIRTUAL</p>
+  <h1>INHO DÚ <span>CORTE</span></h1>
+  <p>ESTILO • ATITUDE • RESPEITO</p>
+  <div class="status">
+    <span class="status-dot"></span>
+    ATENDIMENTO VIRTUAL
+  </div>
 </header>
 
 <main>
-  <div class="card">
-    <div class="chat-header">
-      <div class="bot-icon">✂</div>
+  <section class="card" id="atendimento">
+    <div class="section-heading">
+      <div class="section-icon">💈</div>
       <div>
-        <strong>Atendente virtual</strong>
-        <div class="online">● Atendimento automático</div>
+        <h2>Garanta sua vaga</h2>
+        <p>Faça seu cadastro e entre na fila.</p>
       </div>
     </div>
 
-    <div id="chat" aria-live="polite"></div>
-    <div id="choices"></div>
-
-    <form class="input-area" id="inputArea">
-      <input id="answer" type="text" placeholder="Digite sua resposta..." autocomplete="off" required>
-      <button class="primary" type="submit">Enviar ➤</button>
-    </form>
-
-    <div class="info">
-      Responda às perguntas para entrar na fila.<br>
-      A entrada na fila não é hora marcada.
+    <div class="progress" aria-label="Etapas do cadastro">
+      <div class="progress-step active" id="step1"></div>
+      <div class="progress-step" id="step2"></div>
+      <div class="progress-step" id="step3"></div>
+      <div class="progress-step" id="step4"></div>
     </div>
-  </div>
+    <div class="progress-label" id="progressLabel">Etapa 1 de 4 · Seu nome</div>
 
-  <h2 class="section-title">💈 Serviços e valores</h2>
-  <div class="queue-card">
-    <div>Corte masculino — <span class="price">R$ 25,00</span></div>
-    <div>Barba — <span class="price">R$ 15,00</span></div>
-    <div>Sobrancelha — <span class="price">R$ 5,00</span></div>
-  </div>
+    <div id="chat" aria-live="polite"></div>
+    <div id="choices" hidden></div>
 
-  <h2 class="section-title">👥 Fila neste aparelho</h2>
-  <div class="queue-card" id="queueInfo">
-    Nenhum cliente entrou na fila neste navegador ainda.
-  </div>
+    <div id="inputArea" class="input-area">
+      <input id="userInput" type="text" placeholder="Digite sua resposta..." autocomplete="name" aria-label="Sua resposta">
+      <button id="sendBtn" class="btn" type="button">Enviar ➜</button>
+    </div>
+    <p class="hint">⚠️ A fila on-line não é hora marcada. Fique atento à sua vez e chegue no horário chamado.</p>
+  </section>
+
+  <section class="card">
+    <div class="section-heading">
+      <div class="section-icon">✂️</div>
+      <div>
+        <h2>Nossos serviços</h2>
+        <p>Qualidade no corte e no acabamento.</p>
+      </div>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-emoji">💈</div>
+        <h3>Corte masculino</h3>
+        <p>R$ 25,00</p>
+      </div>
+      <div class="service-card">
+        <div class="service-emoji">🧔</div>
+        <h3>Barba</h3>
+        <p>R$ 15,00</p>
+      </div>
+      <div class="service-card">
+        <div class="service-emoji">✨</div>
+        <h3>Sobrancelha</h3>
+        <p>R$ 5,00</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="fila">
+    <div class="queue-top">
+      <h2>📋 Fila de atendimento</h2>
+      <span class="queue-count" id="queueCount">0 pessoas</span>
+    </div>
+
+    <div id="queueList"></div>
+
+    <div class="notice">
+      <strong>Importante:</strong> sua posição é calculada com base nos cadastros salvos neste navegador. Esta versão ainda não compartilha a fila entre aparelhos diferentes.
+    </div>
+  </section>
 </main>
 
 <footer>
-  Barbearia Inho Dú Corte · Na régua, família! 🔥
+  Feito com atitude por <strong>Barbearia Inho Dú Corte</strong><br>
+  © <span id="year"></span> · Todos os direitos reservados
 </footer>
 
 <script>
-const SERVICES = [
-  { id: "corte", name: "Corte masculino", price: 25 },
-  { id: "barba", name: "Barba", price: 15 },
-  { id: "sobrancelha", name: "Sobrancelha", price: 5 }
-];
+(() => {
+  "use strict";
 
-const STORAGE_KEY = "inho_fila_local_v3";
+  const STORAGE_KEY = "inho_fila_local_v3";
+  const SERVICES = [
+    { name: "Corte masculino", price: 25 },
+    { name: "Barba", price: 15 },
+    { name: "Sobrancelha", price: 5 }
+  ];
 
-const chat = document.getElementById("chat");
-const choices = document.getElementById("choices");
-const inputArea = document.getElementById("inputArea");
-const answer = document.getElementById("answer");
-const queueInfo = document.getElementById("queueInfo");
+  const chat = document.getElementById("chat");
+  const choices = document.getElementById("choices");
+  const inputArea = document.getElementById("inputArea");
+  const userInput = document.getElementById("userInput");
+  const sendBtn = document.getElementById("sendBtn");
+  const progressLabel = document.getElementById("progressLabel");
 
-let step = "name";
-let customer = { name: "", phone: "", services: [] };
-let selectedServices = [];
-let finished = false;
+  let stage = "name";
+  let customerName = "";
+  let customerPhone = "";
+  let selectedServices = [];
+  let waitingForConfirmation = false;
 
-function getQueue() {
-  try {
-    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    return Array.isArray(data) ? data : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveQueue(queue) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(queue));
-}
-
-function money(value) {
-  return value.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL"
-  });
-}
-
-function totalPrice() {
-  return customer.services.reduce((sum, id) => {
-    const service = SERVICES.find(item => item.id === id);
-    return sum + (service ? service.price : 0);
-  }, 0);
-}
-
-function addMessage(text, type) {
-  const bubble = document.createElement("div");
-  bubble.className = "message " + type;
-  bubble.textContent = text;
-  chat.appendChild(bubble);
-  chat.scrollTop = chat.scrollHeight;
-}
-
-function bot(text) {
-  addMessage(text, "bot");
-}
-
-function user(text) {
-  addMessage(text, "user");
-}
-
-function clearChoices() {
-  choices.replaceChildren();
-}
-
-function addButton(text, callback, primary = false) {
-  const button = document.createElement("button");
-  button.textContent = text;
-  if (primary) button.classList.add("primary");
-  button.addEventListener("click", callback);
-  choices.appendChild(button);
-  return button;
-}
-
-function showInput(placeholder, type = "text") {
-  inputArea.hidden = false;
-  answer.type = type;
-  answer.placeholder = placeholder;
-  answer.value = "";
-  answer.focus();
-}
-
-function hideInput() {
-  inputArea.hidden = true;
-}
-
-function showQueue() {
-  const queue = getQueue();
-  queueInfo.replaceChildren();
-
-  if (!queue.length) {
-    queueInfo.textContent =
-      "Nenhum cliente entrou na fila neste navegador ainda.";
-    return;
+  function getQueue() {
+    try {
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      return Array.isArray(data) ? data : [];
+    } catch (error) {
+      return [];
+    }
   }
 
-  queue.slice().reverse().forEach((item) => {
-    const line = document.createElement("div");
-    line.style.padding = "7px 0";
-    line.style.borderBottom = "1px solid #333";
+  function saveQueue(queue) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(queue));
+      return true;
+    } catch (error) {
+      addMessage("Não consegui salvar sua entrada neste aparelho. Verifique o armazenamento do navegador e tente novamente.", "bot");
+      return false;
+    }
+  }
 
-    const name = document.createElement("strong");
-    name.textContent = item.name;
+  function money(value) {
+    return Number(value).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    });
+  }
 
-    const details = document.createElement("div");
-    details.style.color = "#aaa";
-    details.textContent =
-      "Posição registrada: " + item.position +
-      " · " + item.services.map(id =>
-        SERVICES.find(s => s.id === id)?.name || id
-      ).join(", ");
+  function addMessage(text, sender) {
+    const message = document.createElement("div");
+    message.className = "message " + sender;
+    message.textContent = text;
+    chat.appendChild(message);
+    chat.scrollTop = chat.scrollHeight;
+  }
 
-    line.append(name, details);
-    queueInfo.appendChild(line);
-  });
-}
+  function setStage(nextStage) {
+    stage = nextStage;
+    const stages = ["name", "phone", "services", "confirm"];
+    const index = Math.max(0, stages.indexOf(nextStage));
 
-function start() {
-  bot("Fala, família! 💈🔥 Bem-vindo à Barbearia Inho Dú Corte!\n\nVou te ajudar a entrar na fila. É rapidinho!\n\nPrimeiro, qual é o seu nome?");
-  showInput("Digite seu nome");
-  step = "name";
-}
-
-inputArea.addEventListener("submit", function(event) {
-  event.preventDefault();
-  if (finished) return;
-
-  const value = answer.value.trim();
-  if (!value) return;
-
-  if (step === "name") {
-    if (value.length < 2) {
-      bot("Me diz teu nome direitinho, família. 😄");
-      return;
+    for (let i = 1; i <= 4; i++) {
+      const el = document.getElementById("step" + i);
+      el.classList.toggle("active", i === index + 1);
+      el.classList.toggle("done", i < index + 1);
     }
 
-    customer.name = value;
-    user(value);
-    hideInput();
-    step = "phone";
-    bot("Prazer, " + customer.name + "! 😎\n\nAgora me passa teu WhatsApp com DDD, pra gente identificar teu cadastro.");
-    showInput("(75) 99999-9999", "tel");
-    return;
+    const labels = [
+      "Seu nome",
+      "Seu WhatsApp",
+      "Escolha dos serviços",
+      "Confirmação"
+    ];
+
+    progressLabel.textContent =
+      "Etapa " + (index + 1) + " de 4 · " + labels[index];
   }
 
-  if (step === "phone") {
-    const digits = value.replace(/\D/g, "");
-    if (digits.length < 10 || digits.length > 13) {
-      bot("Esse número parece incompleto. Digita o WhatsApp com DDD, por favor.");
-      return;
-    }
-
-    customer.phone = digits;
-    user(value);
-    hideInput();
-    step = "services";
-    showServices();
+  function showInput(placeholder, type = "text") {
+    inputArea.hidden = false;
+    userInput.type = type;
+    userInput.placeholder = placeholder;
+    userInput.value = "";
+    userInput.disabled = false;
+    sendBtn.disabled = false;
+    userInput.focus();
   }
-});
 
-function showServices() {
-  step = "services";
-  selectedServices = [];
-  clearChoices();
-  hideInput();
+  function hideInput() {
+    inputArea.hidden = true;
+  }
 
-  bot("Fechou, " + customer.name + "! 💈\n\nQuais serviços você quer fazer hoje? Pode escolher mais de um.");
-  renderServiceButtons();
-}
+  function clearChoices() {
+    choices.innerHTML = "";
+    choices.hidden = true;
+  }
 
-function renderServiceButtons() {
-  clearChoices();
+  function start() {
+    addMessage("Fala, família! 👊 Bem-vindo à Barbearia Inho Dú Corte. Sou o atendente virtual e vou te ajudar a entrar na fila.", "bot");
+    addMessage("Primeiro, me fala seu nome completo:", "bot");
+    setStage("name");
+    showInput("Digite seu nome...");
+  }
 
-  SERVICES.forEach(service => {
-    const isSelected = selectedServices.includes(service.id);
-    const button = addButton(
-      (isSelected ? "✓ " : "+ ") +
-      service.name + " — " + money(service.price),
-      () => {
-        if (selectedServices.includes(service.id)) {
-          selectedServices = selectedServices.filter(id => id !== service.id);
+  function showServiceChoices() {
+    clearChoices();
+    choices.hidden = false;
+
+    SERVICES.forEach((service) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "choice";
+      button.setAttribute("aria-pressed", "false");
+
+      const name = document.createElement("span");
+      name.className = "service-name";
+      name.textContent = service.name;
+
+      const price = document.createElement("span");
+      price.className = "service-price";
+      price.textContent = money(service.price);
+
+      const check = document.createElement("span");
+      check.className = "check";
+      check.textContent = "";
+
+      button.append(name, price, check);
+
+      button.addEventListener("click", () => {
+        const exists = selectedServices.some(s => s.name === service.name);
+
+        if (exists) {
+          selectedServices = selectedServices.filter(s => s.name !== service.name);
         } else {
-          selectedServices.push(service.id);
+          selectedServices.push(service);
         }
-        renderServiceButtons();
-      }
+
+        const selected = selectedServices.some(s => s.name === service.name);
+        button.classList.toggle("selected", selected);
+        button.setAttribute("aria-pressed", String(selected));
+        check.textContent = selected ? "✓" : "";
+
+        updateTotal();
+      });
+
+      choices.appendChild(button);
+    });
+
+    const total = document.createElement("div");
+    total.id = "serviceTotal";
+    total.className = "total-line";
+    total.style.gridColumn = "1 / -1";
+    total.innerHTML = "<span>Total dos serviços</span><strong>R$ 0,00</strong>";
+    choices.appendChild(total);
+
+    const continueButton = document.createElement("button");
+    continueButton.type = "button";
+    continueButton.className = "btn btn-full";
+    continueButton.style.gridColumn = "1 / -1";
+    continueButton.textContent = "Continuar ➜";
+    continueButton.addEventListener("click", continueServices);
+    choices.appendChild(continueButton);
+
+    hideInput();
+    updateTotal();
+  }
+
+  function updateTotal() {
+    const total = selectedServices.reduce((sum, service) => sum + service.price, 0);
+    const totalEl = document.querySelector("#serviceTotal strong");
+    if (totalEl) totalEl.textContent = money(total);
+  }
+
+  function continueServices() {
+    if (selectedServices.length === 0) {
+      addMessage("Escolhe pelo menos um serviço para continuar, família. 👊", "bot");
+      return;
+    }
+
+    clearChoices();
+    const total = selectedServices.reduce((sum, service) => sum + service.price, 0);
+    const names = selectedServices.map(s => s.name).join(", ");
+
+    addMessage("Serviços escolhidos: " + names + "\nTotal: " + money(total), "user");
+    addMessage(
+      "Confere os dados, " + customerName + ":\n\n" +
+      "📱 WhatsApp: " + customerPhone + "\n" +
+      "✂️ Serviços: " + names + "\n" +
+      "💰 Total: " + money(total) + "\n\n" +
+      "Posso confirmar sua entrada na fila?",
+      "bot"
     );
 
-    if (isSelected) button.classList.add("selected");
-  });
+    setStage("confirm");
+    waitingForConfirmation = true;
+    choices.hidden = false;
 
-  const total = selectedServices.reduce((sum, id) => {
-    return sum + SERVICES.find(s => s.id === id).price;
-  }, 0);
+    const yes = document.createElement("button");
+    yes.type = "button";
+    yes.className = "btn";
+    yes.textContent = "✅ Confirmar entrada";
+    yes.addEventListener("click", confirmEntry);
 
-  const totalLabel = document.createElement("div");
-  totalLabel.style.width = "100%";
-  totalLabel.style.padding = "8px 2px";
-  totalLabel.style.color = "#d5aa52";
-  totalLabel.style.fontWeight = "bold";
-  totalLabel.textContent = "Total selecionado: " + money(total);
-  choices.appendChild(totalLabel);
+    const no = document.createElement("button");
+    no.type = "button";
+    no.className = "btn btn-secondary";
+    no.textContent = "↩️ Alterar serviços";
+    no.addEventListener("click", () => {
+      waitingForConfirmation = false;
+      addMessage("Quero alterar meus serviços.", "user");
+      addMessage("Beleza! Selecione novamente os serviços desejados.", "bot");
+      setStage("services");
+      showServiceChoices();
+    });
 
-  addButton("Continuar ➜", () => {
-    if (!selectedServices.length) {
-      bot("Escolhe pelo menos um serviço para continuar, família. ✂️");
+    choices.append(yes, no);
+    hideInput();
+  }
+
+  function confirmEntry() {
+    if (!waitingForConfirmation) return;
+    waitingForConfirmation = false;
+
+    const queue = getQueue();
+    const now = new Date();
+    const entry = {
+      id: Date.now().toString() + Math.random().toString(36).slice(2, 7),
+      name: customerName,
+      phone: customerPhone,
+      services: selectedServices.map(s => s.name),
+      total: selectedServices.reduce((sum, service) => sum + service.price, 0),
+      createdAt: now.toISOString(),
+      status: "aguardando"
+    };
+
+    queue.push(entry);
+
+    if (!saveQueue(queue)) {
+      waitingForConfirmation = true;
       return;
     }
 
-    customer.services = [...selectedServices];
-    user(customer.services.map(id =>
-      SERVICES.find(s => s.id === id).name
-    ).join(", ") + " — Total: " + money(totalPrice()));
+    const position = queue.length;
+    clearChoices();
+    hideInput();
 
-    showConfirmation();
-  }, true);
-}
+    addMessage("Entrada confirmada, " + customerName + "! 🎉", "bot");
+    addMessage(
+      "Sua posição nesta fila local é: #" + position +
+      "\n\nGuarde essa informação e fique atento à sua vez. Quando chegar sua vez, venha para a barbearia. A fila não é hora marcada!",
+      "bot"
+    );
 
-function showConfirmation() {
-  step = "confirm";
-  clearChoices();
-  hideInput();
+    for (let i = 1; i <= 4; i++) {
+      document.getElementById("step" + i).classList.remove("active");
+      document.getElementById("step" + i).classList.add("done");
+    }
+    progressLabel.textContent = "Cadastro concluído ✓";
 
-  const serviceNames = customer.services.map(id => {
-    const service = SERVICES.find(s => s.id === id);
-    return service.name + " (" + money(service.price) + ")";
-  }).join("\n");
+    renderQueue();
 
-  bot(
-    "Confere se está tudo certo, família! 👇\n\n" +
-    "👤 Nome: " + customer.name + "\n" +
-    "📱 WhatsApp: " + customer.phone + "\n\n" +
-    "✂️ Serviços:\n" + serviceNames + "\n\n" +
-    "💰 Total: " + money(totalPrice()) +
-    "\n\nPosso confirmar sua entrada na fila?"
-  );
+    const restart = document.createElement("button");
+    restart.type = "button";
+    restart.className = "btn btn-full";
+    restart.style.marginTop = "14px";
+    restart.textContent = "➕ Fazer novo cadastro";
+    restart.addEventListener("click", resetForm);
+    chat.appendChild(restart);
+    chat.scrollTop = chat.scrollHeight;
+  }
 
-  addButton("✅ Confirmar e entrar na fila", joinQueue, true);
-  addButton("🔄 Escolher serviços novamente", showServices);
-  addButton("✏️ Corrigir meus dados", editData);
-}
+  function resetForm() {
+    customerName = "";
+    customerPhone = "";
+    selectedServices = [];
+    waitingForConfirmation = false;
+    chat.innerHTML = "";
+    clearChoices();
+    start();
+  }
 
-function editData() {
-  clearChoices();
-  hideInput();
-  bot("Vamos corrigir seu nome. Como você se chama?");
-  step = "name";
-  showInput("Digite seu nome");
-}
+  function handleInput() {
+    const value = userInput.value.trim();
+    if (!value || waitingForConfirmation) return;
 
-function joinQueue() {
-  if (finished) return;
+    addMessage(value, "user");
 
-  const queue = getQueue();
-  const waiting = queue.filter(item => item.status === "Aguardando");
-  const position = waiting.length + 1;
+    if (stage === "name") {
+      if (value.length < 2) {
+        addMessage("Me fala um nome válido pra continuar, família.", "bot");
+        return;
+      }
 
-  const entry = {
-    id: Date.now().toString() + Math.random().toString(36).slice(2, 8),
-    name: customer.name,
-    phone: customer.phone,
-    services: customer.services,
-    total: totalPrice(),
-    position: position,
-    status: "Aguardando",
-    createdAt: new Date().toISOString()
-  };
+      customerName = value;
+      addMessage("Prazer, " + customerName + "! 👊 Agora digite seu número de WhatsApp com DDD:", "bot");
+      setStage("phone");
+      showInput("(00) 00000-0000", "tel");
+      return;
+    }
 
-  queue.push(entry);
-  saveQueue(queue);
-  finished = true;
-  step = "done";
-  clearChoices();
-  hideInput();
+    if (stage === "phone") {
+      const digits = value.replace(/\D/g, "");
 
-  user("Sim, confirmar!");
-  bot(
-    "Pronto, " + customer.name + "! 🎉💈\n\n" +
-    "Sua entrada foi registrada neste aparelho!\n\n" +
-    "📍 Sua posição registrada: " + position + "º lugar\n" +
-    "✂️ Serviços: " + customer.services.map(id =>
-      SERVICES.find(s => s.id === id).name
-    ).join(", ") + "\n" +
-    "💰 Total: " + money(totalPrice()) +
-    "\n\n⚠️ Atenção: isso ainda não é uma fila compartilhada com outros celulares. Acompanhe as orientações da barbearia para saber quando chegar."
-  );
+      if (digits.length < 10 || digits.length > 13) {
+        addMessage("Esse número parece incompleto. Digite o WhatsApp com DDD, por favor.", "bot");
+        showInput("(00) 00000-0000", "tel");
+        return;
+      }
 
-  addButton("➕ Fazer novo cadastro", restart, true);
-  showQueue();
-}
+      customerPhone = value;
+      addMessage("Agora escolha um ou mais serviços. O total será calculado automaticamente. ✂️", "bot");
+      setStage("services");
+      showServiceChoices();
+    }
+  }
 
-function restart() {
-  customer = { name: "", phone: "", services: [] };
-  selectedServices = [];
-  finished = false;
-  step = "name";
-  chat.replaceChildren();
-  clearChoices();
+  function renderQueue() {
+    const queue = getQueue();
+    const queueList = document.getElementById("queueList");
+    const queueCount = document.getElementById("queueCount");
+
+    queueList.innerHTML = "";
+    queueCount.textContent = queue.length + (queue.length === 1 ? " pessoa" : " pessoas");
+
+    if (!queue.length) {
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      empty.textContent = "A fila ainda está vazia. Seja o primeiro a garantir sua vaga! 💈";
+      queueList.appendChild(empty);
+      return;
+    }
+
+    queue.forEach((person, index) => {
+      const item = document.createElement("div");
+      item.className = "queue-item";
+
+      const number = document.createElement("div");
+      number.className = "queue-number";
+      number.textContent = "#" + (index + 1);
+
+      const details = document.createElement("div");
+      details.className = "queue-details";
+
+      const name = document.createElement("strong");
+      name.textContent = person.name;
+
+      const services = document.createElement("small");
+      services.textContent = Array.isArray(person.services)
+        ? person.services.join(" • ")
+        : "Serviços não informados";
+
+      const price = document.createElement("div");
+      price.className = "queue-price";
+      price.textContent = money(person.total || 0);
+
+      details.append(name, services);
+      item.append(number, details, price);
+      queueList.appendChild(item);
+    });
+  }
+
+  sendBtn.addEventListener("click", handleInput);
+
+  userInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") handleInput();
+  });
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  window.addEventListener("storage", (event) => {
+    if (event.key === STORAGE_KEY) renderQueue();
+  });
+
+  renderQueue();
   start();
-}
-
-showQueue();
-start();
+})();
 </script>
 </body>
 </html>
